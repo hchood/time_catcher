@@ -2,7 +2,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: time_catcher_capybara_development
+  database:
   pool: 5
   username:
   password:
@@ -15,7 +15,7 @@ test:
   encoding: unicode
   database: time_catcher_capybara_test
   pool: 5
-  username: time_catcher_capybara
+  username:
   password:
 
 production:
