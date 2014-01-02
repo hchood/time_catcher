@@ -19,17 +19,16 @@ feature 'New user creates account', %Q{
 
     visit '/'
     click_on 'Sign Up'
-
     fill_in 'First Name', with: user.first_name
     fill_in 'Last Name', with: user.last_name
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     fill_in 'Password Confirmation', with: user.password_confirmation
-    save_and_open_page
+    # binding.pry
     click_button 'Sign me up!'
-
+    save_and_open_page
     # it signs the user in
-    expect(page).to have_content "Welcome, #{user.first_name}!"
+    expect(page).to have_content "Welcome! You have signed up successfully."  # change this later
     expect(page).to have_content 'Sign Out'
 
     # it adds the user to the database
@@ -69,11 +68,11 @@ feature 'New user creates account', %Q{
     click_button 'Sign me up!'
 
     # it does not sign the user in
-    expect(page).to_not have_content "Welcome, #{new_user.first_name}!"
+    expect(page).to_not have_content "Welcome! You have signed up successfully." # change this later
     expect(page).to have_button 'Sign me up!'
 
     # it displays errors
-    expect(page).to have_content 'That email address has been taken!'
+    expect(page).to have_content 'Email has already been taken'
 
     # it does not add the new user to the database
     expect(User.all.count).to eq 1
@@ -94,11 +93,11 @@ feature 'New user creates account', %Q{
     click_button 'Sign me up!'
 
     # it does not sign the user in
-    expect(page).to_not have_content "Welcome, #{user.first_name}!"
+    expect(page).to_not have_content "Welcome! You have signed up successfully." # change this later
     expect(page).to have_button 'Sign me up!'
 
     # it displays errors
-    expect(page).to have_content 'Passwords do not match'
+    expect(page).to have_content "Password confirmation doesn't match"
 
     # it does not add the user to the database
     expect(User.all.count).to eq 0
