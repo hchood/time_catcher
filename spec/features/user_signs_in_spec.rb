@@ -29,8 +29,15 @@ feature 'Existing user signs in', %Q{
     expect(page).to have_link 'Sign Out'
   end
 
-  scenario 'supplies invalid email'
+  scenario 'supplies invalid email or password' do
+    visit '/'
+    click_on 'Sign In'
 
-  scenario 'supplies invalid password'
+    fill_in 'Email', with: 'someemail@example.com'
+    fill_in 'Password', with: 'some_password'
+    click_button 'Sign In'
 
+    expect(page).to have_content 'Invalid email or password.'
+    expect(page).to_not have_link 'Sign Out'
+  end
 end
