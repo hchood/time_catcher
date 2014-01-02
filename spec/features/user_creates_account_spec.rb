@@ -26,7 +26,7 @@ feature 'New user creates account', %Q{
     fill_in 'Password Confirmation', with: user.password_confirmation
     # binding.pry
     click_button 'Sign me up!'
-    save_and_open_page
+
     # it signs the user in
     expect(page).to have_content "Welcome! You have signed up successfully."  # change this later
     expect(page).to have_content 'Sign Out'
