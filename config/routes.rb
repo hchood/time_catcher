@@ -3,6 +3,10 @@ TimeCatcherCapybara::Application.routes.draw do
   devise_for :users
   root :to => "home#index"  #added per devise install instructions
 
+  namespace :users do
+    resources :home, only: [:index]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
