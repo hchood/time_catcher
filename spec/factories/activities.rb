@@ -4,6 +4,7 @@ FactoryGirl.define do
     description "This is a generic activity."
     time_needed_in_min 5
 
+    association :category
     association :user
   end
 end
