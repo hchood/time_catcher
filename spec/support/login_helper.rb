@@ -7,3 +7,7 @@ module LoginHelper
     click_button 'Sign In'
   end
 end
+
+RSpec.configure do |config|
+  config.include LoginHelper, :type => :feature
+end
