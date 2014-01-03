@@ -30,6 +30,7 @@ feature 'Authenticated user adds an activity', %Q{
     click_button 'Create Activity'
 
     expect(page).to have_content 'Activity was successfully created.'
+    expect(page).to have_button 'Create Activity'
   end
 
   scenario 'adds an activity without required attributes'
