@@ -11,6 +11,7 @@ feature 'Authenticated user adds an activity', %Q{
   #  * If I’m not signed in, I am not allowed access to add an activity
   #  * I must specify an activity name, estimated minimum time to complete the activity.
   #  * I can optionally specify a description
+  #  * I can optionally specify a category
   #  * activity name must be unique
   #  * If I specify the required details, the activity is logged & I receive a friendly confirmation!
   #  * If I don’t, I’m presented with error messages
@@ -22,9 +23,11 @@ feature 'Authenticated user adds an activity', %Q{
 
     activity = FactoryGirl.create(:activity)
     click_on 'Add Activity'
+    save_and_open_page
     fill_in 'Name', with: activity.name
     fill_in 'Description', with: activity.description
     fill_in 'Time Needed', with: activity.time_needed_in_min
+    select activity.category, from: 'Category'
     click_button 'Create Activity'
 
     expect(page).to have_content 'Activity was successfully created.'

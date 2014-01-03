@@ -1,0 +1,7 @@
+<%= simple_form_for @activity do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :time_needed_in_min, label: 'Time Needed (in min.)' %>
+  <%= f.association :category, collection: @categories %>
+  <%= f.button :submit %>
+<% end %>
