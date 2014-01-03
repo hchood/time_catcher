@@ -5,11 +5,11 @@ class Activity < ActiveRecord::Base
   belongs_to :category
   belongs_to :user
 
-  # def category_name
-  #   if category.nil?
-  #     ""
-  #   else
-  #     category.name
-  #   end
-  # end
+  def category_name
+    if category.nil?
+      ""
+    else
+      category.name
+    end
+  end
 end

@@ -21,13 +21,12 @@ feature 'Authenticated user adds an activity', %Q{
     user = FactoryGirl.create(:user)
     login(user)
 
-    activity = FactoryGirl.create(:activity)
+    activity = FactoryGirl.build(:activity)
     click_on 'Add Activity'
-    save_and_open_page
     fill_in 'Name', with: activity.name
     fill_in 'Description', with: activity.description
     fill_in 'Time Needed', with: activity.time_needed_in_min
-    select activity.category, from: 'Category'
+    select activity.category_name, from: 'Category'
     click_button 'Create Activity'
 
     expect(page).to have_content 'Activity was successfully created.'
