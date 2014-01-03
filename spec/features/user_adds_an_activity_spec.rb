@@ -11,6 +11,7 @@ feature 'Authenticated user adds an activity', %Q{
   #  * If I’m not signed in, I am not allowed access to add an activity
   #  * I must specify an activity name, estimated minimum time to complete the activity.
   #  * I can optionally specify a description
+  #  * activity name must be unique
   #  * If I specify the required details, the activity is logged & I receive a friendly confirmation!
   #  * If I don’t, I’m presented with error messages
   #  * If the name of the activity I entered is already in my activity list, I receive an error message.
