@@ -12,11 +12,6 @@ feature 'Authenticated user views list of activities', %Q{
   # * I can click a link from my home screen to view a list of activities, with name, description, category, and time needed displayed
   # * I can only view my own activities
 
-  # after(:all) do
-  #   Activity.delete_all
-  #   Category.delete_all
-  # end
-
   scenario 'authenticated user views activities' do
     user = FactoryGirl.create(:user)
     activity1 = FactoryGirl.create(:activity, user: user)
