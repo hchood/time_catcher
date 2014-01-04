@@ -8,7 +8,8 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to new_category_path, notice: 'Category was successfully created.'
     else
-      render 'new', notice: 'We encountered some errors.'
+      flash[:notice] = 'We encountered some errors.'
+      render 'new'
     end
   end
 end
