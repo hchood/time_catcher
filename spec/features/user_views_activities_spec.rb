@@ -19,17 +19,18 @@ feature 'Authenticated user views list of activities', %Q{
 
   scenario 'authenticated user views activities' do
     user = FactoryGirl.create(:user)
-    2.times { FactoryGirl.create(:activity, user: user) }
+    activity1 = FactoryGirl.create(:activity, user: user)
+    activity2 = FactoryGirl.create(:activity, user: user)
 
     login(user)
     click_on 'My Activities'
 
-    expect(page).to have_content 'Activity 1'
-    expect(page).to have_content 'Activity 2'
-    expect(page).to have_content 'Category 1'
-    expect(page).to have_content 'Category 2'
-    expect(page).to have_content 'This is a generic activity.'
-    expect(page).to have_content '5'
+    expect(page).to have_content activity1.name
+    expect(page).to have_content activity2.name
+    expect(page).to have_content activity1.category_name
+    expect(page).to have_content activity2.category_name
+    expect(page).to have_content activity1.description
+    expect(page).to have_content activity1.time_needed_in_min
   end
 
   scenario 'unauthenticated user tries to view activities' do
@@ -49,7 +50,7 @@ feature 'Authenticated user views list of activities', %Q{
     login(user)
     click_on 'My Activities'
 
-    expect(page).to have_content 'Activity 3'
-    expect(page).to_not have_content 'Activity 4'
+    expect(page).to have_content activity.name
+    expect(page).to_not have_content other_activity.name
   end
 end
