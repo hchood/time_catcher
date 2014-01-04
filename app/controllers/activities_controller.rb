@@ -1,5 +1,11 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
+
+  def index
+    @user = current_user
+    @activities = Activity.where(user: current_user)
+  end
+
   def new
     @activity = Activity.new
     @categories = Category.all

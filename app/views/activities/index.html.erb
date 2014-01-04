@@ -1,0 +1,19 @@
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Time Needed (in min.)</th>
+  </tr>
+
+<% @activities.each do |activity| %>
+  <tr>
+    <td><%= activity.name %></td>
+    <td><%= activity.description %></td>
+    <td><%= activity.category_name %></td>
+    <td><%= activity.time_needed_in_min %></td>
+  </tr>
+<% end %>
+
+</table>
