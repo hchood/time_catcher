@@ -57,4 +57,11 @@ feature 'Authenticated user adds a category', %Q{
     expect(page).to have_content 'has already been taken'
     expect(page).to have_button 'Create Category'
   end
+
+  scenario 'unauthenticated user attempts to add a category' do
+    visit '/categories/new'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to_not have_button 'Create Category'
+  end
 end
