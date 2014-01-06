@@ -8,6 +8,3 @@ module LoginHelper
   end
 end
 
-RSpec.configure do |config|
-  config.include LoginHelper, :type => :feature
-end
