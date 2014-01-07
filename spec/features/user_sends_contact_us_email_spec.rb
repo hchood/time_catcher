@@ -19,23 +19,24 @@ feature 'User sends email to staff via Contact Us form', %Q{
   end
 
   scenario 'submits email with valid attributes' do
-    prev_count = ContactEmail.count
+    prev_count = Contact.count
+    contact = FactoryGirl.build(:contact)
 
-    visit '/contact_us'
-    fill_in 'Email', with: 'jsmith@gmail.com'
-    fill_in 'Subject', with: 'This site is awesome!'
-    fill_in 'Description', with: "I've saved so much time with your site.  Thanks!"
-    fill_in 'First Name', with: 'Jane'
-    fill_in 'Last Name', with: 'Smith'
+    visit new_contact_path
+    fill_in 'Email', with: contact.email
+    fill_in 'Subject', with: contact.subject
+    fill_in 'Description', with: contact.description
+    fill_in 'First Name', with: contact.first_name
+    fill_in 'Last Name', with: contact.last_name
     click_button 'Submit'
 
     expect(page).to have_content("Thanks for your email!  We'll get back to you soon.")
-    expect(ContactEmail.count).to eq prev_count + 1
+    expect(Contact.count).to eq prev_count + 1
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
     last_email = ActionMailer::Base.deliveries.last
-    expect(last_email).to have_subject 'TimeCatcher - Contact Form Submission'
-    expect(last.email).to deliver_to 'helen.c.hood@gmail.com'
+    expect(last_email).to have_subject "TimeCatcher:  Contact from #{contact.first_name} #{contact.last_name}"
+    expect(last_email).to deliver_to 'helen.c.hood@gmail.com'
   end
 
   scenario 'submits email with missing attributes'
