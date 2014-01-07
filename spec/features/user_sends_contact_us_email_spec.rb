@@ -22,7 +22,8 @@ feature 'User sends email to staff via Contact Us form', %Q{
     prev_count = Contact.count
     contact = FactoryGirl.build(:contact)
 
-    visit new_contact_path
+    visit '/'
+    click_on 'Contact Us'
     fill_in 'Email', with: contact.email
     fill_in 'Subject', with: contact.subject
     fill_in 'Description', with: contact.description

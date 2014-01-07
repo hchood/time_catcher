@@ -6,5 +6,5 @@ class Contact < ActiveRecord::Base
   validates_presence_of :email
 
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates_format_of :email, with: EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates_format_of :email, with: EMAIL_REGEX
 end
