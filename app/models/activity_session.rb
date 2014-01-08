@@ -5,6 +5,10 @@ class ActivitySession < ActiveRecord::Base
 
   belongs_to :activity, dependent: :destroy
 
+  def set_duration
+     self.updated_at - self.created_at
+  end
+
   class << self
     def activities_doable_in(time_available)
       Activity.where('time_needed_in_min <= :time_available', { time_available: time_available.to_i })

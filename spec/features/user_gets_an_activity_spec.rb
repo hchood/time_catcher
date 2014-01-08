@@ -21,14 +21,12 @@ feature 'Authenticated user gets an activity', %Q{
 
   scenario 'user provides valid time available and is given an activity' do
     short_activity = FactoryGirl.create(:activity, user: user)
-    med_activity = FactoryGirl.create(:activity, user: user, time_needed_in_min: 10)
-    long_activity = FactoryGirl.create(:activity, user: user, time_needed_in_min: 15)
+    med_activity = FactoryGirl.create(:activity, user: user, time_needed_in_min: 10, description: 'A different activity')
+    long_activity = FactoryGirl.create(:activity, user: user, time_needed_in_min: 15, description: 'Activity is too long')
 
     login(user)
     fill_in 'activity_session[time_available]', with: 10
     click_on "Give me something to do!"
-
-    click_button "Let's go!"
 
     expect_page_to_have_one_of([short_activity.name, med_activity.name])
     expect_page_to_have_one_of([short_activity.description, med_activity.description])
@@ -36,8 +34,8 @@ feature 'Authenticated user gets an activity', %Q{
     expect(page).to_not have_content long_activity.name
     expect(page).to_not have_content long_activity.description
 
-    expect(page).to have_button "I'm done!"
-    expect(page).to have_button 'Skip'
+    expect(page).to have_link "I'm done!"
+    expect(page).to have_link 'Skip'
   end
 
   scenario 'unauthenticated user cannot get an activity' do
@@ -79,7 +77,6 @@ feature 'Authenticated user gets an activity', %Q{
     activity_attributes.each do |activity_attribute|
       found_count += 1 if page.has_content?(activity_attribute)
     end
-
     expect(found_count).to eq 1
   end
 end
