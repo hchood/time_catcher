@@ -50,6 +50,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
