@@ -11,7 +11,8 @@ class ActivitySession < ActiveRecord::Base
     end
 
     def random_activity_for(time_available)
-      rand_num = rand(Activity.count)
+      possible_activities = activities_doable_in(time_available)
+      rand_num = rand(possible_activities.count)
       activities_doable_in(time_available)[rand_num]
     end
   end
