@@ -9,6 +9,5 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-TimeCatcherCapybara::Application.config.secret_key_base = ENV[SECRET_KEY]
 
-# 'd8daeece4ccd8a64c7a5369c20009c183fe6cec9049063038ca3d9feb970c35721f02fa6a3e18bfc10ac2e23eb963c1ec2edf41cbf5e28018b52c8ccca83b83d'
+TimeCatcherCapybara::Application.config.secret_key_base = ENV['SECRET_KEY']
