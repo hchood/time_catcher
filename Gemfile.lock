@@ -59,6 +59,9 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dotenv (0.9.0)
+    dotenv-rails (0.9.0)
+      dotenv (= 0.9.0)
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -226,6 +229,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
   devise
+  dotenv-rails
   email_spec
   factory_girl_rails
   jbuilder (~> 1.2)
