@@ -62,12 +62,9 @@ feature 'Authenticated user gets an activity', %Q{
     med_activity = FactoryGirl.create(:activity, user: user, time_needed_in_min: 10)
 
     login(user)
-    click_on "Give me something to do!"
-
     fill_in 'activity_session[time_available]', with: 3
-    click_button "Let's go!"
-
-    expect(page).to have_content "Sorry, you don't have any activities you can do in #{@time_available} minutes."
+    click_button "Give me something to do!"
+    expect(page).to have_content "Sorry, you don't have any activities you can do in 3 minutes."
     expect(page).to have_link 'Add Activity'
   end
 

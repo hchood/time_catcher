@@ -27,16 +27,17 @@ class ActivitySessionsController < ApplicationController
     if @activity_session.save
       redirect_to edit_activity_session_path(@activity_session)
     else
-      render 'new'
+      flash[:notice] = "Sorry, you don't have any activities you can do in #{self.time_available} minutes."
+      redirect_to new_activity_session_path
     end
   end
-
-  private
 
   def time_available
     hash = params.require(:activity_session).permit(:time_available)
     hash['time_available']
   end
+
+  private
 
   def activity_session_params
     params.require(:activity_session).permit(:time_available).merge(activity: @activity)
