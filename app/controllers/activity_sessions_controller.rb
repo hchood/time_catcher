@@ -27,14 +27,25 @@ class ActivitySessionsController < ApplicationController
     if @activity_session.save
       redirect_to edit_activity_session_path(@activity_session)
     else
-      flash[:notice] = "Sorry, you don't have any activities you can do in #{self.time_available} minutes."
+      # i want to do different things here depending on the reason the session failed to save
+      #  - if it couldn't find an activity that is doable in that time, redirect_to new path and give
+      # appropriate error message
+      #  - if user entered an invalid amount of time, I want to render the page again and display and
+      # appropriate error message.  However, if I render the page, it for some reason thinks that
+      # the user doesn't have any activities at all.  ???
+
+      if self.time_available <= 0
+        flash[:notice] = 'You must enter a number greater than zero.'
+      else
+        flash[:notice] = "Sorry, you don't have any activities you can do in #{self.time_available} minutes."
+      end
       redirect_to new_activity_session_path
     end
   end
 
   def time_available
     hash = params.require(:activity_session).permit(:time_available)
-    hash['time_available']
+    hash['time_available'].to_i
   end
 
   private

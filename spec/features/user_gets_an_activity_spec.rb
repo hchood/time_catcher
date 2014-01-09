@@ -26,7 +26,7 @@ feature 'Authenticated user gets an activity', %Q{
 
     login(user)
     fill_in 'activity_session[time_available]', with: 10
-    click_on "Give me something to do!"
+    click_on 'Give me something to do!'
 
     expect_page_to_have_one_of([short_activity.name, med_activity.name])
     expect_page_to_have_one_of([short_activity.description, med_activity.description])
@@ -63,14 +63,24 @@ feature 'Authenticated user gets an activity', %Q{
 
     login(user)
     fill_in 'activity_session[time_available]', with: 3
-    click_button "Give me something to do!"
+    click_button 'Give me something to do!'
     expect(page).to have_content "Sorry, you don't have any activities you can do in 3 minutes."
     expect(page).to have_link 'Add Activity'
   end
 
-  scenario 'user enters an invalid time'
+  context 'user enters an invalid time or leaves it blank' do
+    it 'displays an error if a string is input' do
+      activity = FactoryGirl.create(:activity, user: user)
+      login(user)
+      fill_in 'activity_session[time_available]', with: 'abc'
+      click_on 'Give me something to do!'
 
-  scenario 'user does not enter a time'
+      expect(page).to have_content 'You must enter a number greater than zero.'
+      expect(page).to have_button 'Give me something to do!'
+
+      expect(ActivitySession.count).to eq 0
+    end
+  end
 
   def expect_page_to_have_one_of(activity_attributes)
     found_count = 0
