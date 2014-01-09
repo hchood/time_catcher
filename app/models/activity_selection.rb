@@ -3,4 +3,5 @@ class ActivitySelection < ActiveRecord::Base
   validates_presence_of :activity_id
 
   belongs_to :activity_session
+  belongs_to :activity
 end
