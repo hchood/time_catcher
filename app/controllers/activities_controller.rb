@@ -23,6 +23,6 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :description, :time_needed_in_min, :category).merge(user: current_user)
+    params.require(:activity).permit(:name, :description, :time_needed_in_min, :category_id).merge(user: current_user)
   end
 end
