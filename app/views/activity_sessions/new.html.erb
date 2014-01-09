@@ -1,0 +1,25 @@
+<h1>Welcome, <%= current_user.first_name%>!</h1>
+
+<%= link_to 'Add Activity', new_activity_path %>
+<%= link_to 'Add Category', new_category_path %>
+<%= link_to 'My Activities', activities_path %>
+<%= link_to 'My Categories', categories_path %>
+<%= link_to 'My Activity Log', '#' %>
+
+<% if current_user.activities.blank? %>
+
+  <div>
+    <p>You haven't added any activities yet.</p>
+    <p>Click <%= link_to 'here', new_activity_path %> to start adding activities.</p>
+  </div>
+
+<% else %>
+
+  <div>
+    <%= simple_form_for @activity_session do |f| %>
+      I have <%= f.input :time_available, label: false, as: :string %> minutes.
+      <%= f.submit 'Give me something to do!' %>
+    <% end %>
+  </div>
+
+<% end %>

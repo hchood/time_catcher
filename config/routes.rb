@@ -5,10 +5,7 @@ TimeCatcherCapybara::Application.routes.draw do
 
   resources :activities, only: [:index, :new, :create]
   resources :categories, only: [:index, :new, :create]
-
-  namespace :users do
-    resources :home, only: [:index]
-  end
+  resources :activity_sessions, only: [:new, :create, :edit, :update]
 
   resources :contacts, only: [:new, :create]
 
