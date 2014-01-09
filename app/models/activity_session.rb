@@ -4,6 +4,7 @@ class ActivitySession < ActiveRecord::Base
   validates_numericality_of :time_available, greater_than: 0
 
   belongs_to :activity, dependent: :destroy
+  has_many :activity_selections, dependent: :destroy
 
   def set_duration
      self.updated_at - self.created_at

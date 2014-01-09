@@ -8,6 +8,7 @@ describe ActivitySession do
   it { should_not have_valid(:time_available).when('abd', 0) }
 
   it { should belong_to(:activity).dependent(:destroy) }
+  it { should have_many(:activity_selections).dependent(:destroy) }
 
   let!(:user)            { FactoryGirl.create(:user) }
   let!(:short_activity)  { FactoryGirl.create(:activity, user: user) }
