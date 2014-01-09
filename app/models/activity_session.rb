@@ -10,15 +10,19 @@ class ActivitySession < ActiveRecord::Base
      self.updated_at - self.created_at
   end
 
+  def select_new_activity
+
+  end
+
   class << self
-    def activities_doable_in(time_available)
-      Activity.where('time_needed_in_min <= :time_available', { time_available: time_available.to_i })
+    def activities_doable_given(user, time_available)
+      Activity.where('user_id = :user_id AND time_needed_in_min <= :time_available', { user_id: user.id, time_available: time_available.to_i })
     end
 
-    def random_activity_for(time_available)
-      possible_activities = activities_doable_in(time_available)
+    def random_activity_for(user, time_available)
+      possible_activities = activities_doable_given(user, time_available)
       rand_num = rand(possible_activities.count)
-      activities_doable_in(time_available)[rand_num]
+      possible_activities[rand_num]
     end
   end
 end
