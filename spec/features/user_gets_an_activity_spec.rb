@@ -39,7 +39,7 @@ feature 'Authenticated user gets an activity', %Q{
   end
 
   scenario 'unauthenticated user cannot get an activity' do
-    visit '/activitysessions'
+    visit '/activity_sessions/new'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing'
     expect(page).to_not have_button "Let's go!"

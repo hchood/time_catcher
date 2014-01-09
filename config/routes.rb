@@ -7,10 +7,6 @@ TimeCatcherCapybara::Application.routes.draw do
   resources :categories, only: [:index, :new, :create]
   resources :activity_sessions, only: [:new, :create, :edit, :update]
 
-  namespace :users do
-    resources :home, only: [:index]
-  end
-
   resources :contacts, only: [:new, :create]
 
   # The priority is based upon order of creation: first created -> highest priority.

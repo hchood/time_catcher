@@ -2,6 +2,7 @@ class ActivitySessionsController < ApplicationController
   # def index
   #   @activity_session = ActivitySession.new
   # end
+  before_action :authenticate_user!
 
   def new
     @activity_session = ActivitySession.new
