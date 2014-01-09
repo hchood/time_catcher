@@ -53,7 +53,6 @@ feature 'Authenticated user gets an activity', %Q{
   scenario 'user has no activities' do
     login(user)
 
-    save_and_open_page
     expect(page).to have_content "You haven't added any activities yet."
     expect(page).to have_link 'here'
   end

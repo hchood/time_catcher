@@ -6,7 +6,7 @@
 <%= link_to 'My Categories', categories_path %>
 <%= link_to 'My Activity Log', '#' %>
 <div>
-<% if @activities.nil? %>
+<% if @activities.blank? %>
   <p>You haven't added any activities yet.</p>
   <p>Click <%= link_to 'here', new_activity_path %> to start adding activities.</p>
 <% else %>
