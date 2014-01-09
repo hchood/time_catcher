@@ -6,8 +6,13 @@
 <%= link_to 'My Categories', categories_path %>
 <%= link_to 'My Activity Log', '#' %>
 <div>
-<%= simple_form_for @activity_session do |f| %>
-  <p>I have <%= f.input :time_available, label: false %> minutes.</p>
-  <p><%= f.submit 'Give me something to do!' %></p>
+<% if @activities.nil? %>
+  <p>You haven't added any activities yet.</p>
+  <p>Click <%= link_to 'here', new_activity_path %> to start adding activities.</p>
+<% else %>
+  <%= simple_form_for @activity_session do |f| %>
+    <p>I have <%= f.input :time_available, label: false %> minutes.</p>
+    <p><%= f.submit 'Give me something to do!' %></p>
+  <% end %>
 <% end %>
 </div>

@@ -52,10 +52,10 @@ feature 'Authenticated user gets an activity', %Q{
 
   scenario 'user has no activities' do
     login(user)
-    click_on "Give me something to do!"
 
-    expect(page).to have_content "Sorry, you haven't added any activities yet."
-    expect(page).to have_link 'Add Activity'
+    save_and_open_page
+    expect(page).to have_content "You haven't added any activities yet."
+    expect(page).to have_link 'here'
   end
 
   scenario 'user has no activities that can be done in the time available' do
