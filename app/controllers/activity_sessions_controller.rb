@@ -1,7 +1,4 @@
 class ActivitySessionsController < ApplicationController
-  # def index
-  #   @activity_session = ActivitySession.new
-  # end
   before_action :authenticate_user!
 
   def new
@@ -25,11 +22,11 @@ class ActivitySessionsController < ApplicationController
 
   def create
     @activity = ActivitySession.random_activity_for(time_available)
-    @activity_session = ActivitySession.new({time_available: time_available, activity_id: @activity.id})
+    @activity_session = ActivitySession.new(activity_session_params)
     if @activity_session.save
       redirect_to edit_activity_session_path(@activity_session)
     else
-      render 'users/home#index'
+      render 'new'
     end
   end
 
@@ -41,6 +38,6 @@ class ActivitySessionsController < ApplicationController
   end
 
   def activity_session_params
-    { time_available: time_available, activity_id: @activity.id, duration_in_seconds: @activity_session.set_duration }
+    params.require(:activity_session).permit(:time_available).merge(activity: @activity)
   end
 end
