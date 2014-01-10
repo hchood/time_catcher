@@ -16,10 +16,10 @@ describe ActivitySession do
   let!(:med_activity)    { FactoryGirl.create(:activity, user: user, time_needed_in_min: 10) }
   let!(:long_activity)   { FactoryGirl.create(:activity, user: user, time_needed_in_min: 15) }
   let!(:time_available)  { 10 }
+  let!(:possible_choices){ ActivitySession.activities_doable_given(user, time_available) }
 
   describe '.random_activity_for' do
     it 'selects a random activity that can be completed in the time available' do
-      possible_choices = [short_activity, med_activity]
       activity_chosen = ActivitySession.random_activity_for(user, time_available)
 
       expect(possible_choices).to include(activity_chosen)
@@ -57,5 +57,22 @@ describe ActivitySession do
         expect(possible_activities).to include(med_activity)
       end
     end
+  end
+
+  describe '.select_new_activity' do
+    it 'selects an activity that has not yet been selected this session' do
+      activity_session = FactoryGirl.create(:activity_session)
+      activity_session.activity_selections << ActivitySelection.create(activity: short_activity, activity_session: activity_session)
+
+      second_activity = activity_session.select_new_activity
+
+      expect(second_activity).to eq med_activity
+      expect(second_activity).to_not eq short_activity
+      expect(second_activity).to_not eq long_activity
+    end
+
+    it 'does not select an activity that has been selected this session'
+
+    it 'returns an error if no other activities match those criteria'
   end
 end
