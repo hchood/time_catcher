@@ -1,5 +1,6 @@
 class ActivitySession < ActiveRecord::Base
   validates_presence_of :activity_id
+  validates_presence_of :start_time
   validates_presence_of :time_available
   validates_numericality_of :time_available, greater_than: 0
 
