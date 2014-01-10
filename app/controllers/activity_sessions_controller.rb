@@ -1,5 +1,4 @@
 class ActivitySessionsController < ApplicationController
-  before_action :authenticate_user!
 
   def new
     @activities = Activity.where(user: current_user)
