@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
 
   has_many :activities, dependent: :destroy
+  has_many :activity_sessions, through: :activities
 end

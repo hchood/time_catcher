@@ -5,6 +5,7 @@ class ActivitySession < ActiveRecord::Base
 
   belongs_to :activity, dependent: :destroy
   has_many :activity_selections, dependent: :destroy
+  has_one :user, through: :activity
 
   def set_duration
      self.updated_at - self.created_at
@@ -15,8 +16,13 @@ class ActivitySession < ActiveRecord::Base
   end
 
   class << self
-    def activities_doable_given(user, time_available)
-      Activity.where('user_id = :user_id AND time_needed_in_min <= :time_available', { user_id: user.id, time_available: time_available.to_i })
+    def activities_doable_given(user, time_available, activity_session = nil)
+      all_doable_activities = Activity.where('user_id = :user_id AND time_needed_in_min <= :time_available', { user_id: user.id, time_available: time_available.to_i })
+      if activity_session.nil?
+        all_doable_activities
+      else
+        all_doable_activities - activity_session.activity_selections
+      end
     end
 
     def random_activity_for(user, time_available)

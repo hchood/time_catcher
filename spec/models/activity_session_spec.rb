@@ -9,6 +9,7 @@ describe ActivitySession do
 
   it { should belong_to(:activity).dependent(:destroy) }
   it { should have_many(:activity_selections).dependent(:destroy) }
+  it { should have_one(:user).through(:activity)}
 
   let!(:user)            { FactoryGirl.create(:user) }
   let!(:short_activity)  { FactoryGirl.create(:activity, user: user) }
@@ -27,21 +28,34 @@ describe ActivitySession do
   end
 
   describe '.activities_doable_given' do
-    it 'selects all activities that can be completed in the time available' do
-      possible_activities = ActivitySession.activities_doable_given(user, time_available)
+    context 'selects possible activities for first time in session' do
+      it 'selects all activities that can be completed in the time available' do
+        possible_activities = ActivitySession.activities_doable_given(user, time_available)
 
-      expect(possible_activities.length).to eq 2
-      expect(possible_activities).to include(short_activity)
-      expect(possible_activities).to include(med_activity)
+        expect(possible_activities.length).to eq 2
+        expect(possible_activities).to include(short_activity)
+        expect(possible_activities).to include(med_activity)
+      end
+
+      it "does not select other users' activities" do
+        user2 = FactoryGirl.create(:user)
+        user2_activity = FactoryGirl.create(:activity, user: user2)
+
+        possible_activities = ActivitySession.activities_doable_given(user, time_available)
+        expect(possible_activities.length).to eq 2
+        expect(possible_activities).to_not include(user2_activity)
+      end
     end
 
-    it "does not select other users' activities" do
-      user2 = FactoryGirl.create(:user)
-      user2_activity = FactoryGirl.create(:activity, user: user2)
+    context 'selects possible subsequent activities' do
+      it 'only selects activities that have not yet been selected in a given activity_session' do
+        activity_session = FactoryGirl.create(:activity_session, user: user, time_available: time_available)
+        activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: short_activity)
 
-      possible_activities = ActivitySession.activities_doable_given(user, time_available)
-      expect(possible_activities.length).to eq 2
-      expect(possible_activities).to_not include(user2_activity)
+        possible_activities = ActivitySession.activities_doable_given(activity_session.user, activity_session.time_available, activity_session)
+        expect(possible_activities.length).to eq 1
+        expect(possible_activities).to include(med_activity)
+      end
     end
   end
 end
