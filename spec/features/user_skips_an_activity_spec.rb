@@ -54,10 +54,10 @@ feature 'Authenticated user skips an activity', %Q{
   scenario 'user has no more activities that can be done in the time available' do
     click_on 'Skip'
 
-    possible_activities = ActivitySession.activities_doable_for(@activity_session.user, @activity_session.time_available, @activity_session)
+    possible_activities = ActivitySession.activities_doable_given(@activity_session.user, @activity_session.time_available, @activity_session)
 
     expect(possible_activities).to be_empty
-    expect(page).to have_content "You're out of activities that can be done in #{@activity_session.time_available}."
+    expect(page).to have_content "You're out of activities that can be done in #{@activity_session.time_available} minutes."
     expect(page).to have_button 'Give me something to do!'
   end
 end
