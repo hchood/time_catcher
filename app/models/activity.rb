@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
-  validates :time_needed_in_min, presence: true, numericality: true
+  validates_presence_of :time_needed_in_min
+  validates_numericality_of :time_needed_in_min, greater_than: 0
   validates :name, presence: true, uniqueness: true
 
   belongs_to :category
