@@ -36,13 +36,14 @@ class ActivitySessionsController < ApplicationController
   def skip_activity
     @activity_session = ActivitySession.find(params[:id])
     ActivitySelection.create(activity_session: @activity_session, activity: @activity_session.activity)
-    new_activity = nil # random activity where (1) doable in time_available; (2) not in activities_selected
+    new_activity = ActivitySession.random_activity_for(@activity_session.user, @activity_session.time_available, @activity_session)
     if new_activity.blank?
-      flash[:notice] = "You have no more activities that can be done in #{@activity_session.time_available} minutes."
+      flash[:notice] = "You're out of activities that can be done in #{@activity_session.time_available} minutes."
       redirect_to new_activity_session_path
     else
       @activity_session.activity = new_activity
-      if @activity.save
+      @activity_session.start_time = Time.new
+      if @activity_session.save
         redirect_to edit_activity_session_path(@activity_session)
       else
         flash[:notice] = "ERROR!!!!!"
@@ -61,7 +62,6 @@ class ActivitySessionsController < ApplicationController
   private
 
   def activity_session_params
-    binding.pry
     params.require(:activity_session).permit(:time_available).merge(activity: @activity)
   end
 end
