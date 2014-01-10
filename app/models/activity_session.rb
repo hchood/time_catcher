@@ -11,8 +11,10 @@ class ActivitySession < ActiveRecord::Base
      self.updated_at - self.created_at
   end
 
-  def select_new_activity
-
+  def activities_already_selected
+    activities = []
+    activity_selections.each { |selection| activities << selection.activity }
+    activities
   end
 
   class << self
@@ -21,12 +23,12 @@ class ActivitySession < ActiveRecord::Base
       if activity_session.nil?
         all_doable_activities
       else
-        all_doable_activities - activity_session.activity_selections
+        all_doable_activities - activity_session.activities_already_selected
       end
     end
 
-    def random_activity_for(user, time_available)
-      possible_activities = activities_doable_given(user, time_available)
+    def random_activity_for(user, time_available, activity_session = nil)
+      possible_activities = activities_doable_given(user, time_available, activity_session)
       rand_num = rand(possible_activities.count)
       possible_activities[rand_num]
     end

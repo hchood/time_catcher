@@ -18,12 +18,17 @@ describe ActivitySession do
   let!(:time_available)  { 10 }
   let!(:possible_choices){ ActivitySession.activities_doable_given(user, time_available) }
 
-  describe '.random_activity_for' do
-    it 'selects a random activity that can be completed in the time available' do
-      activity_chosen = ActivitySession.random_activity_for(user, time_available)
 
-      expect(possible_choices).to include(activity_chosen)
-      expect(activity_chosen).to_not eq long_activity
+  describe '.activities_already_selected' do
+    it 'returns an array of all activities than have been selected in the session' do
+      activity_session = FactoryGirl.create(:activity_session, user: user, time_available: 15)
+      activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: short_activity)
+      activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: med_activity)
+
+      expect(activity_session.activities_already_selected.length).to eq 2
+      expect(activity_session.activities_already_selected).to include(short_activity)
+      expect(activity_session.activities_already_selected).to include(med_activity)
+      expect(activity_session.activities_already_selected).to_not include(long_activity)
     end
   end
 
@@ -49,30 +54,37 @@ describe ActivitySession do
 
     context 'selects possible subsequent activities' do
       it 'only selects activities that have not yet been selected in a given activity_session' do
-        activity_session = FactoryGirl.create(:activity_session, user: user, time_available: time_available)
-        activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: short_activity)
+        activity_session = FactoryGirl.create(:activity_session, user: user, time_available: time_available, activity: short_activity)
+        activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: activity_session.activity)
 
         possible_activities = ActivitySession.activities_doable_given(activity_session.user, activity_session.time_available, activity_session)
+
         expect(possible_activities.length).to eq 1
         expect(possible_activities).to include(med_activity)
       end
     end
   end
 
-  describe '.select_new_activity' do
-    it 'selects an activity that has not yet been selected this session' do
-      activity_session = FactoryGirl.create(:activity_session)
-      activity_session.activity_selections << ActivitySelection.create(activity: short_activity, activity_session: activity_session)
+  describe '.random_activity_for' do
+    context 'selects the first activity in a session' do
+      it 'selects a random activity that can be completed in the time available' do
+        activity_chosen = ActivitySession.random_activity_for(user, time_available)
 
-      second_activity = activity_session.select_new_activity
-
-      expect(second_activity).to eq med_activity
-      expect(second_activity).to_not eq short_activity
-      expect(second_activity).to_not eq long_activity
+        expect(possible_choices).to include(activity_chosen)
+        expect(activity_chosen).to_not eq long_activity
+      end
     end
 
-    it 'does not select an activity that has been selected this session'
+    context 'selects a subsequent activity' do
+      it 'selects an activity that has not yet been selected' do
+        activity_session = FactoryGirl.create(:activity_session, user: user, time_available: time_available, activity: short_activity)
+        activity_session.activity_selections << ActivitySelection.create(activity_session: activity_session, activity: activity_session.activity)
 
-    it 'returns an error if no other activities match those criteria'
+        second_activity = ActivitySession.random_activity_for(activity_session.user, activity_session.time_available, activity_session)
+
+        expect(second_activity).to eq med_activity
+        expect(second_activity).to_not eq short_activity
+      end
+    end
   end
 end

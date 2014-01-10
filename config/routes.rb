@@ -9,6 +9,8 @@ TimeCatcherCapybara::Application.routes.draw do
 
   resources :contacts, only: [:new, :create]
 
+  patch '/activity_sessions/:id/skip', to: 'activity_sessions#skip_activity'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
