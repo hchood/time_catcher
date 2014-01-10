@@ -24,7 +24,6 @@ feature 'New user creates account', %Q{
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     fill_in 'Password Confirmation', with: user.password_confirmation
-    # binding.pry
     click_button 'Sign me up!'
 
     # it signs the user in
