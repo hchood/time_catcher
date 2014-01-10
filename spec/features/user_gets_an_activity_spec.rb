@@ -34,9 +34,9 @@ feature 'Authenticated user gets an activity', %Q{
     expect(page).to_not have_content long_activity.name
     expect(page).to_not have_content long_activity.description
 
-    # correct links are displayed
-    expect(page).to have_link "I'm done!"
-    expect(page).to have_link 'Skip'
+    # correct buttons are displayed
+    expect(page).to have_button "I'm done!"
+    expect(page).to have_button 'Skip'
 
     # ActivitySession object is created
     expect(ActivitySession.count).to eq 1
