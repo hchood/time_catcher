@@ -11,7 +11,7 @@ describe ActivitySession do
 
   it { should belong_to(:activity).dependent(:destroy) }
   it { should have_many(:activity_selections).dependent(:destroy) }
-  it { should have_one(:user).through(:activity)}
+  it { should have_one(:user).through(:activity) }
 
   let!(:user)            { FactoryGirl.create(:user) }
   let!(:short_activity)  { FactoryGirl.create(:activity, user: user) }

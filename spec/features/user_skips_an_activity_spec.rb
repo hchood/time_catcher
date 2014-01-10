@@ -48,6 +48,12 @@ feature 'Authenticated user skips an activity', %Q{
 
     # ActivitySession object is updated:  first activity is added to activity_selections
     expect(@activity_session.activities_already_selected.length).to eq 1
+
+    # Activity.skipped_count is updated
+    first_activity_updated = Activity.find(@first_activity.id)
+    expect(first_activity_updated.skipped_count).to eq 1
+    expect(@second_activity.skipped_count).to eq 0
+
     # expect(@first_start_time).to_not eq @second_start_time
     # ^ NOT TESTING THIS.  THE TESTS HAPPEN SO QUICKLY THAT MOST OF THE TIME
     # THIS TEST WILL FAIL.  START_TIME DOES GET UPDATED.
@@ -59,7 +65,13 @@ feature 'Authenticated user skips an activity', %Q{
     possible_activities = ActivitySession.activities_doable_given(@activity_session.user, @activity_session.time_available, @activity_session)
 
     expect(possible_activities).to be_empty
+
+    # correct message & button displayed
     expect(page).to have_content "You're out of activities that can be done in #{@activity_session.time_available} minutes."
     expect(page).to have_button 'Give me something to do!'
+
+    # Activity.skipped_count is updated
+    second_activity_updated = Activity.find(@second_activity.id)
+    expect(second_activity_updated.skipped_count).to eq 1
   end
 end

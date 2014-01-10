@@ -4,7 +4,7 @@ class ActivitySession < ActiveRecord::Base
   validates_presence_of :time_available
   validates_numericality_of :time_available, greater_than: 0
 
-  belongs_to :activity, dependent: :destroy
+  belongs_to :activity, dependent: :destroy, inverse_of: :activity_sessions
   has_many :activity_selections, dependent: :destroy
   has_one :user, through: :activity
 

@@ -4,6 +4,7 @@ class Activity < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :user
+  has_many :activity_sessions, inverse_of: :activity
 
   def category_name
     if category.nil?

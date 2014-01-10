@@ -32,9 +32,10 @@ class ActivitySessionsController < ApplicationController
     end
   end
 
-
   def skip_activity
     @activity_session = ActivitySession.find(params[:id])
+    @activity_session.activity.skipped_count += 1
+    @activity_session.activity.save
     ActivitySelection.create(activity_session: @activity_session, activity: @activity_session.activity)
     new_activity = ActivitySession.random_activity_for(@activity_session.user, @activity_session.time_available, @activity_session)
     if new_activity.blank?
@@ -51,9 +52,6 @@ class ActivitySessionsController < ApplicationController
       end
     end
   end
-
-
-
 
   def time_available
     hash = params.require(:activity_session).permit(:time_available)
