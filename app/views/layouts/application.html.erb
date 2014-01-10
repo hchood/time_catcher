@@ -8,6 +8,16 @@
 </head>
 <body>
 
+<h1>Welcome to TimeCatcher!</h1>
+
+<nav>
+  <ul>
+    <li><%= link_to 'About Us', '#' %></li>
+    <li><%= link_to 'Contact Us', new_contact_path %></li>
+    <li><%= link_to_function 'Back', 'history.back()' %></li>
+  </ul>
+</nav>
+
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
@@ -15,11 +25,8 @@
 
 <% if current_user %>
   <p><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></p>
-<% else %>
-  <p><%= link_to 'Sign Up', new_user_registration_path %></p>
-  <p><%= link_to 'Sign In', new_user_session_path %></p>
+  <p><%= link_to 'My Account', edit_user_registration_path %></p>
 <% end %>
-<p><%= link_to 'Contact Us', new_contact_path %></p>
-<p><%= link_to 'Back', :back %></p>
+
 </body>
 </html>
