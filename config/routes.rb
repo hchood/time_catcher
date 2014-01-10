@@ -1,7 +1,7 @@
 TimeCatcherCapybara::Application.routes.draw do
 
   devise_for :users
-  root :to => "home#index"  #added per devise install instructions
+  root to: "home#index"  #added per devise install instructions
 
   resources :activities, only: [:index, :new, :create]
   resources :categories, only: [:index, :new, :create]
