@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110193052) do
+ActiveRecord::Schema.define(version: 20140110222358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140110193052) do
     t.datetime "updated_at"
     t.integer  "category_id"
     t.integer  "skipped_count",      default: 0
+    t.integer  "completed_count",    default: 0
   end
 
   add_index "activities", ["name"], name: "index_activities_on_name", unique: true, using: :btree

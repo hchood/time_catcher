@@ -13,8 +13,10 @@ class ActivitySessionsController < ApplicationController
 
   def update
     @activity_session = ActivitySession.find(params[:id])
-    if @activity_session.update(activity_session_params)
-      redirect_to users_home_index, notice: "Yay!"
+    @activity_session.activity.completed_count += 1
+    @activity_session.activity.save
+    if @activity_session.update(finished_at: Time.now)
+      redirect_to new_activity_session_path, notice: "Yay!"
     else
       flash[:notice] = "Error!"
       render 'edit'
@@ -62,5 +64,9 @@ class ActivitySessionsController < ApplicationController
 
   def activity_session_params
     params.require(:activity_session).permit(:time_available).merge(activity: @activity, start_time: Time.new)
+  end
+
+  def updated_activity_session_params
+
   end
 end

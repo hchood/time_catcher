@@ -4,6 +4,6 @@
   <p><%= @activity.description %></p>
   <p>Category: <%= @activity.category_name %></p>
 
-  <%= button_to "I'm done!", '#' %>
+  <%= button_to "I'm done!", { controller: :activity_sessions, action: :update }, method: :patch %>
   <%= button_to 'Skip', { controller: :activity_sessions, action: :skip_activity, id: @activity_session.id }, method: :patch %>
 </div>
