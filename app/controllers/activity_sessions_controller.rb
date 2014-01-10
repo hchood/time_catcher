@@ -46,7 +46,8 @@ class ActivitySessionsController < ApplicationController
       if @activity_session.save
         redirect_to edit_activity_session_path(@activity_session)
       else
-        flash[:notice] = "ERROR!!!!!"
+        flash[:notice] = "Sorry, we encountered an error."
+        redirect_to new_activity_session_path
       end
     end
   end
