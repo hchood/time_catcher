@@ -31,6 +31,16 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def destroy
+    @activity = Activity.find(params[:id])
+    if @activity.destroy
+      redirect_to activities_path, notice: 'Activity has been deleted.'
+    else
+      flash[:notice] = "Uh oh!  We encountered a problem."
+      render 'edit'
+    end
+  end
+
   private
 
   def activity_params

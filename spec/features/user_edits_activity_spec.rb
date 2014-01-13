@@ -35,7 +35,17 @@ feature 'user edits an activity', %Q{
     expect(Activity.first.time_needed_in_min).to eq 20
   end
 
-  scenario 'authenticated user deletes activity'
+  scenario 'authenticated user deletes activity' do
+    login(user)
+    click_on 'My Activities'
+    click_on 'Delete'
+
+    # displays success message
+    expect(page).to have_content 'Activity has been deleted.'
+
+    # does not display
+    expect(page).to_not have_content activity.name
+  end
 
   scenario 'unauthenticated user attempts to delete activity'
 
