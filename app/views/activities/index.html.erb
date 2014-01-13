@@ -13,6 +13,7 @@
     <td><%= activity.description %></td>
     <td><%= activity.category_name %></td>
     <td><%= activity.time_needed_in_min %></td>
+    <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
   </tr>
 <% end %>
 
