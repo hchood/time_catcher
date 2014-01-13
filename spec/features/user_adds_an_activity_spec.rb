@@ -22,7 +22,8 @@ feature 'Authenticated user adds an activity', %Q{
   scenario 'adds an activity with valid attributes' do
     login(user)
 
-    activity = FactoryGirl.build(:activity)
+    category = FactoryGirl.create(:category, user: user)
+    activity = FactoryGirl.build(:activity, category: category)
     click_on 'Add Activity'
     fill_in 'Name', with: activity.name
     fill_in 'Description', with: activity.description
@@ -76,7 +77,6 @@ feature 'Authenticated user adds an activity', %Q{
     fill_in 'Name', with: new_activity.name
     fill_in 'Description', with: new_activity.description
     fill_in 'Time Needed', with: new_activity.time_needed_in_min
-    select new_activity.category_name, from: 'Category'
     click_button 'Create Activity'
 
     expect(page).to have_content 'has already been taken'
