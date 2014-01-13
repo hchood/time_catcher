@@ -41,7 +41,7 @@ feature 'New user creates account', %Q{
     click_button 'Sign me up!'
 
     # it does not sign the user in
-    expect(page).to_not have_content 'Welcome'
+    expect(page).to_not have_link 'Sign Out'
     expect(page).to have_button 'Sign me up!'
 
     # it displays errors
