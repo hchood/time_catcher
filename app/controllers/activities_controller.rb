@@ -7,7 +7,7 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new
-    @categories = Category.all
+    @categories = Category.where(user: current_user)
   end
 
   def create
