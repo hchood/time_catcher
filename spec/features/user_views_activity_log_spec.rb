@@ -15,12 +15,10 @@ feature 'authenticated user views activity log', %Q{
   #    * I can sort my activity log by any of the fields in the table
   #    * If I have not done any activities in the past week, I am presented with a message to that effect.
 
-  let!(:user) { FactoryGirl.create(:user) }
-  let!(:activity_sessions) do
-    array = []
-    2.times { array << FactoryGirl.create(:activity_session, user: user) }
-    array
-  end
+  let!(:user)               { FactoryGirl.create(:user) }
+  let!(:activity_session1)  { FactoryGirl.create(:activity_session, user: user, start_time: 1.hour.ago) }
+  let!(:activity_session2)  { FactoryGirl.create(:activity_session, user: user) }
+  let!(:activity_sessions)  { [activity_session1, activity_session2] }
 
   context 'authenticated user' do
     before(:each) do
@@ -43,9 +41,35 @@ feature 'authenticated user views activity log', %Q{
           expect(page).to have_content session.activity.category_name
           expect(page).to have_content (session.duration_in_seconds / 60).to_i
         end
+
+        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
 
-      it 'sorts by activity name'
+      it 'sorts by activity name' do
+        click_on 'Name'
+        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
+      end
+
+
+# let!(:old_comment) { Factory(:comment) }
+# let!(:new_comment) { Factory(:comment) }
+
+# page.body.index(new_comment.text).should < page.body.index(old_comment.text)
+
+# Rspec::Matchers.define :appear_before do |later_content|
+#   match do |earlier_content|
+#     page.body.index(earlier_content) < page.body.index(later_content)
+#   end
+# end
+
+# let!(:old_comment) { Factory(:comment) }
+# let!(:new_comment) { Factory(:comment) }
+
+# new_comment.text.should appear_before(old_comment.text)
+
+
+
+
       it 'sorts by category'
       it 'sorts by duration'
       it 'sorts by date'
