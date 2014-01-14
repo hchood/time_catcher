@@ -31,7 +31,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_content 'Sign Out'
 
     # it adds the user to the database
-    expect(User.all.count).to eq 1
+    expect(User.count).to eq 1
   end
 
   scenario 'does not supply required information' do
@@ -48,7 +48,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_content "can't be blank"
 
     # it does not add the user to the database
-    expect(User.all.count).to eq 0
+    expect(User.count).to eq 0
   end
 
   scenario 'email is already in use' do
@@ -74,7 +74,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_content 'Email has already been taken'
 
     # it does not add the new user to the database
-    expect(User.all.count).to eq 1
+    expect(User.count).to eq 1
   end
 
   scenario 'password confirmation does not match password' do
@@ -99,7 +99,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_content "Password confirmation doesn't match"
 
     # it does not add the user to the database
-    expect(User.all.count).to eq 0
+    expect(User.count).to eq 0
   end
 
   scenario 'does not supply valid email'
