@@ -6,5 +6,5 @@ describe Category do
   it { should validate_uniqueness_of(:name).scoped_to(:user_id) }
 
   it { should have_many(:activities).dependent(:nullify) }
-  it { should belong_to(:user).dependent(:destroy) }
+  it { should belong_to :user }
 end
