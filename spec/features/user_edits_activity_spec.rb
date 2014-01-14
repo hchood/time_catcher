@@ -71,7 +71,7 @@ feature 'user edits an activity', %Q{
     click_on 'Update Activity'
 
     # displays error message
-    expect(page).to have_content "has already been taken"
+    expect(page).to have_content 'has already been taken'
 
     # activity attributes are not updated
     expect(Activity.first.name).to eq activity.name

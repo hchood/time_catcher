@@ -32,10 +32,54 @@ feature 'user edits a category', %Q{
     expect(Category.first.name).to eq 'A Different Name'
   end
 
-  scenario 'authenticated user deletes category'
+  scenario 'authenticated user deletes category' do
+    login(user)
+    click_on 'My Categories'
+    click_on 'Delete'
 
-  scenario 'category name already taken'
+    # displays success message
+    expect(page).to have_content 'Category has been deleted.'
 
-  scenario 'unauthenticated user attempts to edit or delete an activity'
+    # does not display
+    expect(page).to_not have_content category.name
+  end
+
+  scenario 'missing name attribute' do
+    login(user)
+    click_on 'My Categories'
+    click_on 'Edit'
+    fill_in 'Name', with: nil
+    click_on 'Update Category'
+
+    # displays error message
+    expect(page).to have_content "can't be blank"
+
+    # category name is not updated
+    expect(Category.first.name).to eq category.name
+  end
+
+  scenario 'category name already taken' do
+    existing_category = FactoryGirl.create(:category, user: user)
+
+    login(user)
+    click_on 'My Categories'
+    first(:link, 'Edit').click
+    fill_in 'Name', with: existing_category.name
+    click_on 'Update Category'
+
+    # displays error message
+    expect(page).to have_content 'has already been taken'
+
+    # category name is not updated
+    expect(Category.first.name).to eq category.name
+  end
+
+  scenario 'unauthenticated user attempts to edit or delete an activity' do
+    visit '/categories'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to_not have_link 'Edit'
+    expect(page).to_not have_link 'Delete'
+  end
 
 end
