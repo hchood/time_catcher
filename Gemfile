@@ -32,6 +32,8 @@ gem 'devise'
 
 gem 'simple_form'
 
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -51,6 +53,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'dotenv-rails'
+  gem 'orderly'
 end
 
 group :development do
