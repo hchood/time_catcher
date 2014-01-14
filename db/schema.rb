@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110222358) do
+ActiveRecord::Schema.define(version: 20140114124622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20140110222358) do
     t.integer  "completed_count",    default: 0
   end
 
-  add_index "activities", ["name"], name: "index_activities_on_name", unique: true, using: :btree
+  add_index "activities", ["name", "user_id"], name: "index_activities_on_name_and_user_id", unique: true, using: :btree
 
   create_table "activity_selections", force: true do |t|
     t.integer  "activity_id",         null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20140110222358) do
     t.integer "user_id"
   end
 
-  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
+  add_index "categories", ["name", "user_id"], name: "index_categories_on_name_and_user_id", unique: true, using: :btree
 
   create_table "contacts", force: true do |t|
     t.string "first_name",  null: false

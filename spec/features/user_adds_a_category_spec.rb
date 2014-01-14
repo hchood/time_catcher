@@ -46,7 +46,7 @@ feature 'Authenticated user adds a category', %Q{
     login(user)
     click_on 'Add Category'
 
-    existing_category = FactoryGirl.create(:category)
+    existing_category = FactoryGirl.create(:category, user: user)
     new_category = FactoryGirl.build(:category, name: existing_category.name)
 
     fill_in 'Name', with: new_category.name

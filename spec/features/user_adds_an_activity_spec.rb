@@ -70,8 +70,8 @@ feature 'Authenticated user adds an activity', %Q{
 
   scenario 'adds an activity already in the list' do
     login(user)
-    existing_activity = FactoryGirl.create(:activity)
-    new_activity = FactoryGirl.build(:activity, name: existing_activity.name)
+    existing_activity = FactoryGirl.create(:activity, user: user)
+    new_activity = FactoryGirl.build(:activity, user: user, name: existing_activity.name)
 
     click_on 'Add Activity'
     fill_in 'Name', with: new_activity.name
@@ -79,6 +79,7 @@ feature 'Authenticated user adds an activity', %Q{
     fill_in 'Time Needed', with: new_activity.time_needed_in_min
     click_button 'Create Activity'
 
+    expect(Activity.count).to eq 1
     expect(page).to have_content 'has already been taken'
     expect(page).to have_button 'Create Activity'
   end
