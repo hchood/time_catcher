@@ -47,10 +47,41 @@ feature 'user edits an activity', %Q{
     expect(page).to_not have_content activity.name
   end
 
-  scenario 'unauthenticated user attempts to delete activity'
+  scenario 'missing attributes' do
+    login(user)
+    click_on 'My Activities'
+    click_on 'Edit'
+    fill_in 'Name', with: ''
+    click_on 'Submit'
 
-  scenario 'missing attributes'
+    # displays error message
+    expect(page).to have_content "can't be blank"
 
-  scenario 'activity name already taken'
+    # activity attributes are not updated
+    expect(Activity.first.name).to eq activity.name
+  end
 
+  scenario 'activity name already taken' do
+    existing_activity = FactoryGirl.create(:activity, user: user)
+
+    login(user)
+    click_on 'My Activities'
+    first(:link, 'Edit').click
+    fill_in 'Name', with: existing_activity.name
+    click_on 'Submit'
+
+    # displays error message
+    expect(page).to have_content "has already been taken"
+
+    # activity attributes are not updated
+    expect(Activity.first.name).to eq activity.name
+  end
+
+  scenario 'unauthenticated user attempts to edit or delete an activity' do
+    visit '/activities'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to_not have_link 'Edit'
+    expect(page).to_not have_link 'Delete'
+  end
 end

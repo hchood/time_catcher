@@ -14,6 +14,8 @@ class ActivitiesController < ApplicationController
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Changes saved!'
     else
+      flash[:notice] = "Uh oh!  We encountered a problem."
+      render 'edit'
     end
   end
 
