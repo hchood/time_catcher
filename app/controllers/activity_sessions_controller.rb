@@ -1,7 +1,7 @@
 class ActivitySessionsController < ApplicationController
 
   def index
-    @activity_sessions = ActivitySession.where(user: current_user, finished_at: 7.days.ago..Time.now)
+    @activity_sessions = ActivitySession.where(user: current_user, finished_at: 7.days.ago..Time.now).order('start_time DESC')
   end
 
   def new

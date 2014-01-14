@@ -16,8 +16,8 @@ feature 'authenticated user views activity log', %Q{
   #    * If I have not done any activities in the past week, I am presented with a message to that effect.
 
   let!(:user)               { FactoryGirl.create(:user) }
-  let!(:activity_session1)  { FactoryGirl.create(:activity_session, user: user, start_time: 1.hour.ago) }
-  let!(:activity_session2)  { FactoryGirl.create(:activity_session, user: user) }
+  let!(:activity_session1)  { FactoryGirl.create(:activity_session, user: user, start_time: 1.hour.ago, duration_in_seconds: 400) }
+  let!(:activity_session2)  { FactoryGirl.create(:activity_session, user: user, start_time: 15.minutes.ago, duration_in_seconds: 250) }
   let!(:activity_sessions)  { [activity_session1, activity_session2] }
 
   context 'authenticated user' do
@@ -42,37 +42,31 @@ feature 'authenticated user views activity log', %Q{
           expect(page).to have_content (session.duration_in_seconds / 60).to_i
         end
 
-        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
+        activity_session2.activity.name.should appear_before(activity_session1.activity.name)
       end
 
       it 'sorts by activity name' do
-        click_on 'Name'
+        find('.activity-name').click
         activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
 
+      it 'sorts by category' do
+        find('.category').click
+        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
+      end
 
-# let!(:old_comment) { Factory(:comment) }
-# let!(:new_comment) { Factory(:comment) }
+# BROKEN!!! But i think the ones above are, too -- they just happen to be in the right order
+      it 'sorts by duration' do
+        find('.duration').click
+        # save_screenshot('/spec/test_screenshot.png', full: true)
+        activity_session2.activity.name.should appear_before(activity_session1.activity.name)
+      end
 
-# page.body.index(new_comment.text).should < page.body.index(old_comment.text)
-
-# Rspec::Matchers.define :appear_before do |later_content|
-#   match do |earlier_content|
-#     page.body.index(earlier_content) < page.body.index(later_content)
-#   end
-# end
-
-# let!(:old_comment) { Factory(:comment) }
-# let!(:new_comment) { Factory(:comment) }
-
-# new_comment.text.should appear_before(old_comment.text)
-
-
-
-
-      it 'sorts by category'
-      it 'sorts by duration'
-      it 'sorts by date'
+      it 'sorts by date' do
+        find('.duration').click # change order
+        find('.date').click # change order back to ordered by date
+        activity_session2.activity.name.should appear_before(activity_session1.activity.name)
+      end
     end
 
     context 'does not have activities logged' do
@@ -82,6 +76,10 @@ feature 'authenticated user views activity log', %Q{
   end
 
   context 'unauthenticated user' do
-    it 'does not allow access to acitvity log'
+    it 'does not allow access to acitvity log' do
+      visit '/activity_sessions'
+
+      expect(page).to have_content
+    end
   end
 end
