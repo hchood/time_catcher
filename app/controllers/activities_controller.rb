@@ -7,6 +7,7 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
+    @categories = Category.where(user: current_user)
   end
 
   def update
