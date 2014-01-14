@@ -25,8 +25,10 @@ feature 'User marks an activity completed', %Q{
     # number of times completed is incremented
     expect(activity.reload.completed_count).to eq 1
 
-    # ActivitySession finished_at should be updated
-    expect(ActivitySession.first.finished_at).to_not be_nil
+    # ActivitySession finished_at & duration should be updated
+    completed_activity = ActivitySession.first
+    expect(completed_activity.finished_at).to_not be_nil
+    expect(completed_activity.duration_in_seconds).to_not be_nil
 
     # redirects to new_activity_session_path
     expect(page).to have_button 'Give me something to do!'

@@ -64,8 +64,4 @@ class ActivitySessionsController < ApplicationController
   def activity_session_params
     params.require(:activity_session).permit(:time_available).merge(activity: @activity, start_time: Time.new)
   end
-
-  def updated_activity_session_params
-
-  end
 end

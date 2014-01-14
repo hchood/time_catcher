@@ -8,9 +8,7 @@ class ActivitySession < ActiveRecord::Base
   has_many :activity_selections, dependent: :destroy
   has_one :user, through: :activity
 
-  def set_duration
-     self.updated_at - self.created_at
-  end
+  before_update :set_duration
 
   def activities_already_selected
     activities = []
@@ -33,5 +31,11 @@ class ActivitySession < ActiveRecord::Base
       rand_num = rand(possible_activities.count)
       possible_activities[rand_num]
     end
+  end
+
+  private
+
+  def set_duration
+    self.duration_in_seconds = finished_at - start_time
   end
 end
