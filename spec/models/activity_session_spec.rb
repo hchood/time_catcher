@@ -9,7 +9,7 @@ describe ActivitySession do
   it { should have_valid(:time_available).when(1, 5) }
   it { should_not have_valid(:time_available).when('abd', 0) }
 
-  it { should belong_to(:activity).dependent(:destroy) }
+  it { should belong_to :activity }
   it { should have_many(:activity_selections).dependent(:destroy) }
   it { should have_one(:user).through(:activity) }
 
