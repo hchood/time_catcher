@@ -1,5 +1,9 @@
 class ActivitySessionsController < ApplicationController
 
+  def index
+    @activity_sessions = ActivitySession.where(user: current_user, finished_at: 7.days.ago..Time.now)
+  end
+
   def new
     @activities = Activity.where(user: current_user)
     @activity_session = ActivitySession.new

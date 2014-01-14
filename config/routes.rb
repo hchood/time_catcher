@@ -5,7 +5,7 @@ TimeCatcherCapybara::Application.routes.draw do
 
   resources :activities, except: [:show]
   resources :categories, except: [:show]
-  resources :activity_sessions, only: [:new, :create, :edit, :update]
+  resources :activity_sessions, only: [:index, :new, :create, :edit, :update]
 
   resources :contacts, only: [:new, :create]
 
