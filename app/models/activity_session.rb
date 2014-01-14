@@ -6,7 +6,7 @@ class ActivitySession < ActiveRecord::Base
 
   belongs_to :activity, inverse_of: :activity_sessions
   has_many :activity_selections, dependent: :destroy, inverse_of: :activity_session
-  has_one :user, through: :activity, inverse_of: :activity_sessions
+  belongs_to :user, inverse_of: :activity_sessions
 
   before_update :set_duration
 
