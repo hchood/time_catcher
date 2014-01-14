@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates_presence_of :last_name
 
-  has_many :activities, dependent: :destroy
-  has_many :categories, dependent: :destroy
-  has_many :activity_sessions, through: :activities
+  has_many :activities, dependent: :destroy, inverse_of: :user
+  has_many :categories, dependent: :destroy, inverse_of: :user
+  has_many :activity_sessions, through: :activities, inverse_of: :user
 end

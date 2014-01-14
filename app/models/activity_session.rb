@@ -5,8 +5,8 @@ class ActivitySession < ActiveRecord::Base
   validates_numericality_of :time_available, greater_than: 0
 
   belongs_to :activity, inverse_of: :activity_sessions
-  has_many :activity_selections, dependent: :destroy
-  has_one :user, through: :activity
+  has_many :activity_selections, dependent: :destroy, inverse_of: :activity_session
+  has_one :user, through: :activity, inverse_of: :activity_sessions
 
   before_update :set_duration
 

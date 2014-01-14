@@ -5,9 +5,10 @@ class Activity < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, scope: :user_id
 
-  belongs_to :category
-  belongs_to :user
+  belongs_to :category, inverse_of: :activities
+  belongs_to :user, inverse_of: :activities
   has_many :activity_sessions, dependent: :destroy, inverse_of: :activity
+  has_many :activity_selections, dependent: :destroy, inverse_of: :activity
 
   def category_name
     if category.nil?
