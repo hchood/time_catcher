@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'user edits an activity', %Q{
   As an authenticated user
-  I want to edit or delete an activity
+  I want to edit an activity
   So that I can correct mistakes or change the amount of time needed for the activity or delete an activity
 } do
 
@@ -25,7 +25,7 @@ feature 'user edits an activity', %Q{
     click_on 'Edit'
     fill_in 'Name', with: 'A Different Name'
     fill_in 'Time Needed', with: 20
-    click_on 'Submit'
+    click_on 'Update Activity'
 
     # displays success message
     expect(page).to have_content 'Changes saved!'
@@ -52,7 +52,7 @@ feature 'user edits an activity', %Q{
     click_on 'My Activities'
     click_on 'Edit'
     fill_in 'Name', with: ''
-    click_on 'Submit'
+    click_on 'Update Activity'
 
     # displays error message
     expect(page).to have_content "can't be blank"
@@ -68,7 +68,7 @@ feature 'user edits an activity', %Q{
     click_on 'My Activities'
     first(:link, 'Edit').click
     fill_in 'Name', with: existing_activity.name
-    click_on 'Submit'
+    click_on 'Update Activity'
 
     # displays error message
     expect(page).to have_content "has already been taken"

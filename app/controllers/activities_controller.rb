@@ -40,7 +40,7 @@ class ActivitiesController < ApplicationController
       redirect_to activities_path, notice: 'Activity has been deleted.'
     else
       flash[:notice] = "Uh oh!  We encountered a problem."
-      render 'edit'
+      redirect_to activities_path
     end
   end
 
