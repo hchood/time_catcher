@@ -4,6 +4,20 @@ class CategoriesController < ApplicationController
     @categories = Category.where(user: current_user)
   end
 
+  def edit
+    @category = Category.find(params[:id])
+  end
+
+  def update
+    @category = Category.find(params[:id])
+    if @category.update(category_params)
+       redirect_to categories_path, notice: 'Changes saved!'
+    else
+      flash[:notice] = "Uh oh!  We encountered a problem."
+      render 'edit'
+    end
+  end
+
   def new
     @category = Category.new
   end

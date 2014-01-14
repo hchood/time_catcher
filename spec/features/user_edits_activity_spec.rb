@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'user edits an activity', %Q{
   As an authenticated user
-  I want to edit an activity
+  I want to edit or delete an activity
   So that I can correct mistakes or change the amount of time needed for the activity or delete an activity
 } do
 
