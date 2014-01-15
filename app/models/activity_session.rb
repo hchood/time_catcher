@@ -36,6 +36,6 @@ class ActivitySession < ActiveRecord::Base
   private
 
   def set_duration
-    self.duration_in_seconds = finished_at - start_time
+    self.duration_in_seconds = finished_at - start_time unless finished_at.nil?
   end
 end
