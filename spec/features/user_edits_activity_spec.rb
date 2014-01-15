@@ -23,8 +23,8 @@ feature 'user edits an activity', %Q{
     login(user)
     click_on 'My Activities'
     click_on 'Edit'
-    fill_in 'Name', with: 'A Different Name'
-    fill_in 'Time Needed', with: 20
+    fill_in 'activity_name', with: 'A Different Name'
+    fill_in 'activity_time_needed_in_min', with: 20
     click_on 'Update Activity'
 
     # displays success message
@@ -51,7 +51,7 @@ feature 'user edits an activity', %Q{
     login(user)
     click_on 'My Activities'
     click_on 'Edit'
-    fill_in 'Name', with: ''
+    fill_in 'activity_name', with: ''
     click_on 'Update Activity'
 
     # displays error message
@@ -67,7 +67,7 @@ feature 'user edits an activity', %Q{
     login(user)
     click_on 'My Activities'
     first(:link, 'Edit').click
-    fill_in 'Name', with: existing_activity.name
+    fill_in 'activity_name', with: existing_activity.name
     click_on 'Update Activity'
 
     # displays error message

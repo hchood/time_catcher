@@ -25,10 +25,10 @@ feature 'Authenticated user adds an activity', %Q{
     category = FactoryGirl.create(:category, user: user)
     activity = FactoryGirl.build(:activity, category: category)
     click_on 'Add Activity'
-    fill_in 'Name', with: activity.name
-    fill_in 'Description', with: activity.description
-    fill_in 'Time Needed', with: activity.time_needed_in_min
-    select activity.category_name, from: 'Category'
+    fill_in 'activity_name', with: activity.name
+    fill_in 'activity_description', with: activity.description
+    fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
+    select activity.category_name, from: 'activity_category_id'
     click_button 'Create Activity'
 
     expect(page).to have_content 'Activity was successfully created.'
@@ -43,8 +43,8 @@ feature 'Authenticated user adds an activity', %Q{
 
     activity = FactoryGirl.build(:activity)
     click_on 'Add Activity'
-    fill_in 'Name', with: activity.name
-    fill_in 'Time Needed', with: activity.time_needed_in_min
+    fill_in 'activity_name', with: activity.name
+    fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
     click_button 'Create Activity'
 
     expect(page).to have_content 'Activity was successfully created.'
@@ -74,9 +74,9 @@ feature 'Authenticated user adds an activity', %Q{
     new_activity = FactoryGirl.build(:activity, user: user, name: existing_activity.name)
 
     click_on 'Add Activity'
-    fill_in 'Name', with: new_activity.name
-    fill_in 'Description', with: new_activity.description
-    fill_in 'Time Needed', with: new_activity.time_needed_in_min
+    fill_in 'activity_name', with: new_activity.name
+    fill_in 'activity_description', with: new_activity.description
+    fill_in 'activity_time_needed_in_min', with: new_activity.time_needed_in_min
     click_button 'Create Activity'
 
     expect(Activity.count).to eq 1
