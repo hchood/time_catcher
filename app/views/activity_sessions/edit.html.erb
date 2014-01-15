@@ -1,9 +1,18 @@
 
 <div>
-  <h2><%= @activity.name %></h2>
-  <p><%= @activity.description %></p>
-  <p>Category: <%= @activity.category_name %></p>
+  <div class="row">
+  <div class="small-5 columns centered">
+    <h2><%= @activity.name %></h2>
+  </div>
+</div>
 
-  <%= button_to "I'm done!", { controller: :activity_sessions, action: :update }, method: :patch %>
-  <%= button_to 'Skip', { controller: :activity_sessions, action: :skip_activity, id: @activity_session.id }, method: :patch %>
+<div class="row form">
+  <div class="small-5 columns centered">
+    <p><%= @activity.description %></p>
+    <p><strong>Category: </strong><%= @activity.category_name %></p>
+
+
+    <div class="inline"><%= button_to "I'm done!", { controller: :activity_sessions, action: :update }, method: :patch, class: 'radius button' %></div>
+    <div class="inline"><%= button_to 'Skip', { controller: :activity_sessions, action: :skip_activity, id: @activity_session.id }, method: :patch, class: 'radius button' %></div>
+  </div>
 </div>
