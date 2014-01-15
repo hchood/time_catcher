@@ -20,8 +20,8 @@ feature 'Existing user signs in', %Q{
     visit '/'
     click_on 'Sign In'
 
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
     click_button 'Sign In'
 
     expect(page).to have_content "Welcome, #{user.first_name}!"
@@ -33,8 +33,8 @@ feature 'Existing user signs in', %Q{
     visit '/'
     click_on 'Sign In'
 
-    fill_in 'Email', with: 'someemail@example.com'
-    fill_in 'Password', with: 'some_password'
+    fill_in 'user_email', with: 'someemail@example.com'
+    fill_in 'user_password', with: 'some_password'
     click_button 'Sign In'
 
     expect(page).to have_content 'Invalid email or password.'

@@ -19,11 +19,11 @@ feature 'New user creates account', %Q{
 
     visit '/'
     click_on 'Sign Up'
-    fill_in 'First Name', with: user.first_name
-    fill_in 'Last Name', with: user.last_name
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    fill_in 'Password Confirmation', with: user.password_confirmation
+    fill_in 'user_first_name', with: user.first_name
+    fill_in 'user_last_name', with: user.last_name
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    fill_in 'user_password_confirmation', with: user.password_confirmation
     click_button 'Sign me up!'
 
     # it signs the user in
@@ -58,11 +58,11 @@ feature 'New user creates account', %Q{
     visit '/'
     click_on 'Sign Up'
 
-    fill_in 'First Name', with: new_user.first_name
-    fill_in 'Last Name', with: new_user.last_name
-    fill_in 'Email', with: new_user.email
-    fill_in 'Password', with: new_user.password
-    fill_in 'Password Confirmation', with: new_user.password_confirmation
+    fill_in 'user_first_name', with: new_user.first_name
+    fill_in 'user_last_name', with: new_user.last_name
+    fill_in 'user_email', with: new_user.email
+    fill_in 'user_password', with: new_user.password
+    fill_in 'user_password_confirmation', with: new_user.password_confirmation
 
     click_button 'Sign me up!'
 
@@ -71,7 +71,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_button 'Sign me up!'
 
     # it displays errors
-    expect(page).to have_content 'Email has already been taken'
+    expect(page).to have_content 'has already been taken'
 
     # it does not add the new user to the database
     expect(User.count).to eq 1
@@ -83,11 +83,11 @@ feature 'New user creates account', %Q{
     visit '/'
     click_on 'Sign Up'
 
-    fill_in 'First Name', with: user.first_name
-    fill_in 'Last Name', with: user.last_name
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    fill_in 'Password Confirmation', with: 'wrong_password'
+    fill_in 'user_first_name', with: user.first_name
+    fill_in 'user_last_name', with: user.last_name
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    fill_in 'user_password_confirmation', with: 'wrong_password'
 
     click_button 'Sign me up!'
 
@@ -96,7 +96,7 @@ feature 'New user creates account', %Q{
     expect(page).to have_button 'Sign me up!'
 
     # it displays errors
-    expect(page).to have_content "Password confirmation doesn't match"
+    expect(page).to have_content "doesn't match Password"
 
     # it does not add the user to the database
     expect(User.count).to eq 0

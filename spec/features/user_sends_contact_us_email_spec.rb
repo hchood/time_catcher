@@ -24,11 +24,11 @@ feature 'User sends email to staff via Contact Us form', %Q{
 
     visit '/'
     click_on 'Contact Us'
-    fill_in 'Email', with: contact.email
-    fill_in 'Subject', with: contact.subject
-    fill_in 'Description', with: contact.description
-    fill_in 'First Name', with: contact.first_name
-    fill_in 'Last Name', with: contact.last_name
+    fill_in 'contact_first_name', with: contact.first_name
+    fill_in 'contact_last_name', with: contact.last_name
+    fill_in 'contact_email', with: contact.email
+    fill_in 'contact_subject', with: contact.subject
+    fill_in 'contact_description', with: contact.description
     click_button 'Submit'
 
     expect(page).to have_content("Thanks for your email!  We'll get back to you soon.")
