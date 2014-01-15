@@ -1,8 +1,19 @@
-<%= simple_form_for @contact do |f| %>
-  <%= f.input :first_name, label: 'First Name' %>
-  <%= f.input :last_name, label: 'Last Name' %>
-  <%= f.input :email %>
-  <%= f.input :subject %>
-  <%= f.input :description, as: :text %>
-  <%= f.submit 'Submit' %>
-<% end %>
+<div class="row">
+  <div class="small-5 columns centered">
+    <h2>Contact Us</h2>
+    <p>Let us know how you like the site and how we can make it better!</p>
+  </div>
+</div>
+
+<div class="row form devise">
+  <div class="small-5 columns centered">
+    <%= simple_form_for @contact do |f| %>
+      <%= f.input :first_name, label: false, placeholder: 'First Name' %>
+      <%= f.input :last_name, label: false, placeholder: 'Last Name' %>
+      <%= f.input :email, label: false, placeholder: 'Email address' %>
+      <%= f.input :subject, label: false, placeholder: 'Subject' %>
+      <%= f.input :description, as: :text, label: false, placeholder: 'Your comments here!' %>
+      <%= f.submit 'Submit', class: 'radius button' %>
+    <% end %>
+  </div>
+</div>
