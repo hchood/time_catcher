@@ -34,6 +34,8 @@ gem 'simple_form'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
+gem 'zurb-foundation'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
