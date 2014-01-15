@@ -79,7 +79,7 @@ $default-float: left;
 
 // Colors
 
-// $primary-color: #2ba6cb;
+$primary-color: #25567b;
 // $secondary-color: #e9e9e9;
 $alert-color: lightblue;
 // $success-color: #5da423;
@@ -1255,8 +1255,8 @@ $button-font-align: center;
 
 // Background color for the top bar
 
-// $topbar-bg-color: #111;
-// $topbar-bg: $topbar-bg-color;
+$topbar-bg-color: $primary-color;
+$topbar-bg: $topbar-bg-color;
 
 // Height and margin
 

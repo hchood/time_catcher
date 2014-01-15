@@ -17,11 +17,12 @@
   	<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
 
   	<%= stylesheet_link_tag    "application" %>
-  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+    <%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body class="bg">
+
     <div>
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
@@ -30,32 +31,45 @@
           </li>
         </ul>
         <section class="top-bar-section">
-          <ul>
+          <ul class="right">
             <li class="divider"></li>
-            <li><%= link_to 'About Us', '#' %></li>
+            <li class="active"><%= link_to 'About Us', '#' %></li>
             <li class="divider"></li>
             <li><%= link_to 'Contact Us', new_contact_path %></li>
+            <ul class="right"></ul>
             <% if current_user %>
               <li class="divider"></li>
-              <li><%= link_to 'Add Activity', new_activity_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'Add Category', new_category_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'My Activities', activities_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'My Categories', categories_path %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'My Activity Log', activity_sessions_path %></li>
+              <li><%= link_to 'My Account', edit_user_registration_path %></li>
               <li class="divider"></li>
               <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
-              <li class="divider"></li>
-              <li><%= link_to 'My Account', edit_user_registration_path %></li>
             <% else %>
               <li class="divider"></li>
               <li><%= link_to 'Sign Up', new_user_registration_path %></li>
               <li class="divider"></li>
               <li><%= link_to 'Sign In', new_user_session_path %></li>
             <% end %>
+            </ul>
+          </ul>
+
+          <ul class="left">
+            <li class="divider"></li>
+            <li class="has_dropdown">
+              <a href="#">Menu</a>
+              <ul class="dropdown">
+                <li class="divider"></li>
+                <li><%= link_to 'Add Activity', new_activity_path %></li>
+                <li class="divider"></li>
+                <li><%= link_to 'Add Category', new_category_path %></li>
+                <li class="divider"></li>
+                <li><%= link_to 'My Activities', activities_path %></li>
+                <li class="divider"></li>
+                <li><%= link_to 'My Categories', categories_path %></li>
+                <li class="divider"></li>
+                <li><%= link_to 'My Activity Log', activity_sessions_path %></li>
+                <li class="divider"></li>
+              </ul>
+            </li>
+            <li class="divider"></li>
           </ul>
         </section>
       </nav>
