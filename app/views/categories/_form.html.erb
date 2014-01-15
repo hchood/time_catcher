@@ -1,4 +1,8 @@
-<%= simple_form_for @category do |f| %>
-  <%= f.input :name %>
-  <%= f.button :submit %>
-<% end %>
+<div class="row form">
+  <div class="small-5 columns centered">
+    <%= simple_form_for @category do |f| %>
+      <%= f.input :name, label: false, placeholder: 'Name' %>
+      <%= f.button :submit, class: 'radius button' %>
+    <% end %>
+  </div>
+</div>
