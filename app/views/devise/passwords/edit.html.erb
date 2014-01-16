@@ -1,4 +1,8 @@
-<h2>Change your password</h2>
+<div class="row form devise">
+  <div class="small-5 columns centered">
+    <h2>Change your password</h2>
+  </div>
+</div>
 
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
