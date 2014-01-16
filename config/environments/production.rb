@@ -79,7 +79,7 @@ TimeCatcherCapybara::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.action_mailer.default_url_options = { :host => 'timecatcher.herokuapp.com' }
 
-    ActionMailer::Base.smtp_settings = {
+  ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
     :authentication => :plain,
