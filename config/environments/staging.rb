@@ -78,4 +78,14 @@ TimeCatcherCapybara::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
   config.action_mailer.default_url_options = { :host => 'timecatcher-staging.herokuapp.com' }
+
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'timecatcher-staging.heroku.com',
+    :enable_starttls_auto => true
+  }
 end

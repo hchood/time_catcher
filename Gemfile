@@ -37,7 +37,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # gem 'zurb-foundation'
 gem 'foundation-rails'
 
-gem 'sendgrid-rails', '~> 2.0'
+gem 'sendgrid'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
