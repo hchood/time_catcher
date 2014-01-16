@@ -1,26 +1,35 @@
+<div class="row">
+  <div class="small-9 columns centered">
+    <h2>My Activities</h2>
+  </div>
+</div>
 
-<table id="activities">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Category</th>
-      <th>Time Needed (in min.)</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row form">
+  <div class="small-9 columns centered">
+    <table id="activities">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Time Needed</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @activities.each do |activity| %>
-      <tr>
-        <td><%= activity.name %></td>
-        <td><%= activity.description %></td>
-        <td><%= activity.category_name %></td>
-        <td><%= activity.time_needed_in_min %></td>
-        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @activities.each do |activity| %>
+          <tr>
+            <td><%= activity.name %></td>
+            <td><%= activity.description %></td>
+            <td><%= activity.category_name %></td>
+            <td><%= "#{activity.time_needed_in_min} min." %></td>
+            <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
+            <td><%= link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
