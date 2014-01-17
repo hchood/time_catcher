@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
     if @category.update(category_params)
        redirect_to categories_path, notice: 'Changes saved!'
     else
-      flash[:notice] = "Uh oh!  We encountered a problem."
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
       render 'edit'
     end
   end
@@ -27,7 +27,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to new_category_path, notice: 'Category was successfully created.'
     else
-      flash[:notice] = 'We encountered some errors.'
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
       render 'new'
     end
   end
@@ -37,7 +37,7 @@ class CategoriesController < ApplicationController
     if @category.destroy
       redirect_to categories_path, notice: 'Category has been deleted.'
     else
-      flash[:notice] = "Uh oh!  We encountered a problem."
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
       redirect_to categories_path
     end
   end
