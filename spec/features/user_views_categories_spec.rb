@@ -7,20 +7,24 @@ feature 'Authenticated user views list of categories', %Q{
 } do
 
   # Acceptance Criteria:
-  # * I must be signed in to add a category
-  # * If I’m not signed in, I am not allowed access to add a category
+  # * I must be signed in to view a category
+  # * If I’m not signed in, I am not allowed access to view a category
   # * I can click a link from my home screen to view a list of categories
+  # * I can see the names of activities associated with each category, as well as the category name
 
   scenario 'authenticated user views categories' do
     user = FactoryGirl.create(:user)
-    category1 = FactoryGirl.create(:category, user: user)
-    category2 = FactoryGirl.create(:category, user: user)
+    categories = FactoryGirl.create_list(:category, 2, user: user)
+    category1_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.first)
+    category2_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.last)
 
     login(user)
     click_on 'My Categories'
 
-    expect(page).to have_content category1.name
-    expect(page).to have_content category2.name
+    categories.each do |category|
+      expect(page).to have_content category.name
+      expect(page).to have_content "#{category.activities.first.name}, #{category.activities.last.name}"
+    end
   end
 
   scenario 'unauthenticated user tries to view categories' do
