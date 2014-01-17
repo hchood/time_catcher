@@ -6,26 +6,30 @@
 
 <div class="row form">
   <div class="small-9 columns centered">
-    <table id="activity-log">
-      <thead>
-        <tr>
-          <th class="date">Date</th>
-          <th class="activity-name">Activity</th>
-          <th class="category">Category</th>
-          <th class="duration">Duration</th>
-        </tr>
-      </thead>
+    <% if @activity_sessions.blank? %>
+      <div>You haven't logged any activities yet!</div>
+    <% else %>
+      <table id="activity-log">
+        <thead>
+          <tr>
+            <th class="date">Date</th>
+            <th class="activity-name">Activity</th>
+            <th class="category">Category</th>
+            <th class="duration">Duration</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <% @activity_sessions.each do |activity_session| %>
-        <tr>
-          <td><%= activity_session.start_time %></td>
-          <td><%= activity_session.activity.name %></td>
-          <td><%= activity_session.activity.category_name %></td>
-          <td><%= "#{(activity_session.duration_in_seconds)/60.to_i} min." %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+        <tbody>
+          <% @activity_sessions.each do |activity_session| %>
+          <tr>
+            <td><%= activity_session.start_time %></td>
+            <td><%= activity_session.activity.name %></td>
+            <td><%= activity_session.activity.category_name %></td>
+            <td><%= "#{(activity_session.duration_in_seconds)/60.to_i} min." %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
