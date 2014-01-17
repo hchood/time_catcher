@@ -32,7 +32,11 @@ class ActivitySessionsController < ApplicationController
     if @activity_session.save
       redirect_to edit_activity_session_path(@activity_session)
     else
-      flash[:notice] = "Sorry, you don't have any activities you can do in #{time_available} minutes." if @activity.blank?
+      if time_available > 0
+        flash[:notice] = "Sorry, you don't have any activities you can do in #{time_available} minutes."
+      else
+        flash[:notice] = "You must enter a number greater than 0."
+      end
       render new_activity_session_path
     end
   end

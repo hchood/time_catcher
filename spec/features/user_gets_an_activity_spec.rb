@@ -70,13 +70,47 @@ feature 'Authenticated user gets an activity', %Q{
   end
 
   context 'user enters an invalid time or leaves it blank' do
-    it 'displays an error if a string is input' do
-      activity = FactoryGirl.create(:activity, user: user)
+    let!(:activity) { FactoryGirl.create(:activity, user: user) }
+
+    scenario 'displays an error if a string is input' do
       login(user)
       fill_in 'activity_session[time_available]', with: 'abc'
       click_on 'Give me something to do!'
 
-      expect(page).to have_content 'is not a number'
+      expect(page).to have_content 'You must enter a number greater than 0.'
+      expect(page).to have_button 'Give me something to do!'
+
+      expect(ActivitySession.count).to eq 0
+    end
+
+    scenario 'displays an error if inputs negative number' do
+      login(user)
+      fill_in 'activity_session[time_available]', with: -5
+      click_on 'Give me something to do!'
+
+      expect(page).to have_content 'You must enter a number greater than 0.'
+      expect(page).to have_button 'Give me something to do!'
+
+      expect(ActivitySession.count).to eq 0
+    end
+
+    scenario 'displays an error if inputs 0' do
+      login(user)
+      fill_in 'activity_session[time_available]', with: 0
+      click_on 'Give me something to do!'
+
+      expect(page).to have_content 'You must enter a number greater than 0.'
+      expect(page).to have_button 'Give me something to do!'
+
+      expect(ActivitySession.count).to eq 0
+    end
+
+
+    scenario 'displays an error if leaves time blank' do
+      login(user)
+      click_on 'Give me something to do!'
+
+      expect(page).to have_content 'You must enter a number greater than 0.'
       expect(page).to have_button 'Give me something to do!'
 
       expect(ActivitySession.count).to eq 0
