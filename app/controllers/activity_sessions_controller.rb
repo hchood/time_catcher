@@ -49,7 +49,7 @@ class ActivitySessionsController < ApplicationController
     ActivitySelection.create(activity_session: @activity_session, activity: @activity_session.activity)
     new_activity = ActivitySession.random_activity_for(@activity_session.user, @activity_session.time_available, @activity_session)
     if new_activity.blank?
-      flash.now[:notice] = "You're out of activities that can be done in #{pluralize(@activity_session.time_available, 'minute')}."
+      flash[:notice] = "You're out of activities that can be done in #{pluralize(@activity_session.time_available, 'minute')}."
       redirect_to new_activity_session_path
     else
       @activity_session.activity = new_activity

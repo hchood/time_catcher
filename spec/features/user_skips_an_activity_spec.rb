@@ -67,7 +67,7 @@ feature 'Authenticated user skips an activity', %Q{
     expect(possible_activities).to be_empty
 
     # correct message & button displayed
-    expect(page).to have_content "You're out of activities that can be done in #{pluralize(@activity_session.time_available, 'minute')}."
+    expect(page).to have_content "You're out of activities that can be done in 10 minutes."
     expect(page).to have_button 'Give me something to do!'
 
     # Activity.skipped_count is updated

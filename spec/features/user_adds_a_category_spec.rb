@@ -37,7 +37,7 @@ feature 'Authenticated user adds a category', %Q{
     click_button 'Create Category'
 
     expect(Category.count).to eq 0
-    expect(page).to have_content 'We encountered some errors.'
+    expect(page).to have_content "Uh oh!  We encountered a problem."
     expect(page).to have_content "can't be blank"
     expect(page).to have_button 'Create Category'
   end
@@ -53,7 +53,7 @@ feature 'Authenticated user adds a category', %Q{
     click_button 'Create Category'
 
     expect(Category.count).to eq 1
-    expect(page).to have_content 'We encountered some errors.'
+    expect(page).to have_content "Uh oh!  We encountered a problem."
     expect(page).to have_content 'has already been taken'
     expect(page).to have_button 'Create Category'
   end

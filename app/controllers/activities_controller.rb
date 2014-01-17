@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
     if @activity.save
       redirect_to new_activity_path, notice: 'Activity was successfully created.'
     else
-      render 'new', notice: 'We encountered some errors.'
+      render 'new', notice: "Uh oh!  We encountered a problem."
     end
   end
 
