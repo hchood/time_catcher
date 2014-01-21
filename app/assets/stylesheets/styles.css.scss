@@ -34,7 +34,11 @@
   display: inline-block;
 }
 
-.about-us-header {
+.about-us-header1 {
+  margin-top: 20px;
+}
+
+.about-us-header2 {
   margin-bottom: 20px;
 }
 
@@ -43,4 +47,6 @@
   border-radius: 99px;
   -webkit-border-radius: 99px;
   -moz-border-radius: 99px;
+  margin-left: 20px;
+  margin-top: -70px;
 }
