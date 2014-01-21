@@ -50,3 +50,9 @@
   margin-left: 20px;
   margin-top: -70px;
 }
+
+@media (max-width: 850px) {
+  .profile-pic {
+    display: none;
+  }
+}
