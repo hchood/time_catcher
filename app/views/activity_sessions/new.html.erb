@@ -18,7 +18,7 @@
       <div class="form new-activity-session">
         <%= simple_form_for @activity_session do |f| %>
           <div class="inline">I have</div>
-          <div class="inline"><%= f.input :time_available, label: false, as: :string %></div>
+          <div class="inline"><%= f.input :time_available, label: false, as: :string, error: false %></div>
           <div class="inline">minutes.</div>
           <div><%= f.submit 'Give me something to do!', class: 'radius button' %><div>
         <% end %>

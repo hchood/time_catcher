@@ -6,4 +6,9 @@ class Category < ActiveRecord::Base
 
   has_many :activities, dependent: :nullify, inverse_of: :category
   belongs_to :user, inverse_of: :categories
+
+  def activity_names
+    names = activities.map { |activity| activity.name }
+    names.join(", ")
+  end
 end

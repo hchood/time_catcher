@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Changes saved!'
     else
-      flash[:notice] = "Uh oh!  We encountered a problem."
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
       render 'edit'
     end
   end
@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
     if @activity.save
       redirect_to new_activity_path, notice: 'Activity was successfully created.'
     else
-      render 'new', notice: 'We encountered some errors.'
+      render 'new', notice: "Uh oh!  We encountered a problem."
     end
   end
 
@@ -39,7 +39,7 @@ class ActivitiesController < ApplicationController
     if @activity.destroy
       redirect_to activities_path, notice: 'Activity has been deleted.'
     else
-      flash[:notice] = "Uh oh!  We encountered a problem."
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
       redirect_to activities_path
     end
   end

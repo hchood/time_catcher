@@ -3,7 +3,11 @@
 # Ruby, Java, .NET, PHP, and Python applications with deep visibility and low overhead.
 # For more information, visit www.newrelic.com.
 #
+<<<<<<< HEAD
 # Generated January 20, 2014
+=======
+# Generated January 21, 2014
+>>>>>>> staging
 #
 # This configuration file is custom generated for app21072083@heroku.com
 
@@ -42,7 +46,9 @@ common: &default_settings
   #       - Ajax Service
   #       - All Services
   #
-  app_name: Timecatcher
+  app_name:
+      - TimeCatcher
+      - TimeCatcher Staging
 
   # When "true", the agent collects performance data about your
   # application and reports this data to the New Relic service at

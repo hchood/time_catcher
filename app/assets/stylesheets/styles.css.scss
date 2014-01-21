@@ -25,6 +25,11 @@
   }
 }
 
+.notice, .alert, .error {
+  font-weight: bold;
+  margin: 5px;
+}
+
 .inline {
   display: inline-block;
 }

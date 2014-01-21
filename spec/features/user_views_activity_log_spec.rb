@@ -16,25 +16,20 @@ feature 'authenticated user views activity log', %Q{
   #    * If I have not done any activities in the past week, I am presented with a message to that effect.
 
   let!(:user)               { FactoryGirl.create(:user) }
-  let!(:activity_session1)  { FactoryGirl.create(:activity_session, user: user, start_time: 1.hour.ago, duration_in_seconds: 400) }
-  let!(:activity_session2)  { FactoryGirl.create(:activity_session, user: user, start_time: 15.minutes.ago, duration_in_seconds: 250) }
-  let!(:activity_sessions)  { [activity_session1, activity_session2] }
 
   context 'authenticated user' do
-    before(:each) do
-      login(user)
-      click_on 'My Activity Log'
-    end
-
     context 'has activities logged' do
-      # before(:all) do
-      #   activity_sessions = []
-      #   2.times do
-      #     activity_sessions << FactoryGirl.create(:activity_session, user: user)
-      #   end
-      # end
+      let!(:activity_session1)  { FactoryGirl.create(:activity_session, user: user, start_time: 1.hour.ago, duration_in_seconds: 400) }
+      let!(:activity_session2)  { FactoryGirl.create(:activity_session, user: user, start_time: 15.minutes.ago, duration_in_seconds: 250) }
+      let!(:activity_sessions)  { [activity_session1, activity_session2] }
 
-      it 'displays activities sorted by date' do
+      before(:each) do
+        login(user)
+        find_link('Menu').hover
+        click_on 'My Activity Log'
+      end
+
+      it 'displays activities sorted by date', js: true do
         activity_sessions.each do |session|
           expect(page).to have_content session.start_time
           expect(page).to have_content session.activity.name
@@ -42,44 +37,54 @@ feature 'authenticated user views activity log', %Q{
           expect(page).to have_content (session.duration_in_seconds / 60).to_i
         end
 
-        activity_session2.activity.name.should appear_before(activity_session1.activity.name)
+        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
 
-      it 'sorts by activity name' do
+      it 'sorts by activity name', js: true do
         find('.activity-name').click
         activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
 
-      it 'sorts by category' do
+      it 'sorts by category', js: true do
         find('.category').click
         activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
 
-# BROKEN!!! But i think the ones above are, too -- they just happen to be in the right order
-      it 'sorts by duration' do
+      it 'sorts by duration', js: true do
         find('.duration').click
-        # save_screenshot('/spec/test_screenshot.png', full: true)
         activity_session2.activity.name.should appear_before(activity_session1.activity.name)
       end
 
-      it 'sorts by date' do
+      it 'sorts by date', js: true do
         find('.duration').click # change order
         find('.date').click # change order back to ordered by date
-        activity_session2.activity.name.should appear_before(activity_session1.activity.name)
+        activity_session1.activity.name.should appear_before(activity_session2.activity.name)
       end
     end
 
     context 'does not have activities logged' do
-      it 'displays a message'
-      it 'does not display activity log table'
+      before(:each) do
+        login(user)
+        find_link('Menu').hover
+        click_on 'My Activity Log'
+      end
+
+      it 'displays a message', js: true do
+        expect(page).to have_content "You haven't logged any activities yet!"
+      end
+
+      it 'does not display activity log table', js: true do
+        expect(page).to_not have_content 'entries'
+      end
     end
   end
 
   context 'unauthenticated user' do
-    it 'does not allow access to acitvity log' do
+    it 'does not allow access to activity log' do
       visit '/activity_sessions'
 
-      expect(page).to have_content
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+      expect(page).to_not have_content 'My Activity Log'
     end
   end
 end
