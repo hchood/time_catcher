@@ -22,7 +22,7 @@
         <tbody>
           <% @activity_sessions.each do |activity_session| %>
           <tr>
-            <td><%= activity_session.start_time %></td>
+            <td><%= activity_session.start_time.strftime("%a., %-m/%-d/%Y %l:%M %p") %></td>
             <td><%= activity_session.activity.name %></td>
             <td><%= activity_session.activity.category_name %></td>
             <td><%= "#{(activity_session.duration_in_seconds)/60.to_i} min." %></td>

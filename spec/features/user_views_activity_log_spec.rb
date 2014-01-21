@@ -31,7 +31,7 @@ feature 'authenticated user views activity log', %Q{
 
       it 'displays activities sorted by date', js: true do
         activity_sessions.each do |session|
-          expect(page).to have_content session.start_time
+          expect(page).to have_content session.start_time.strftime("%a., %-m/%-d/%Y %l:%M %p")
           expect(page).to have_content session.activity.name
           expect(page).to have_content session.activity.category_name
           expect(page).to have_content (session.duration_in_seconds / 60).to_i
