@@ -33,3 +33,14 @@
 .inline {
   display: inline-block;
 }
+
+.about-us-header {
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  border: $primary_color 4px solid;
+  border-radius: 99px;
+  -webkit-border-radius: 99px;
+  -moz-border-radius: 99px;
+}
