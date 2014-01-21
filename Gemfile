@@ -74,6 +74,7 @@ end
 
 group :test do
   gem 'email_spec'
+  gem 'simplecov', require: false
 end
 
 # Use ActiveModel has_secure_password
