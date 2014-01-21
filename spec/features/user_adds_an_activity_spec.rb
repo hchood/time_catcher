@@ -17,77 +17,80 @@ feature 'Authenticated user adds an activity', %Q{
   #  * If I don’t, I’m presented with error messages
   #  * If the name of the activity I entered is already in my activity list, I receive an error message.
 
-  let!(:user) { FactoryGirl.create(:user) }
+  context 'authenticated user' do
 
-  scenario 'adds an activity with valid attributes' do
-    login(user)
+    let!(:user)       { FactoryGirl.create(:user) }
+    let!(:category)   { FactoryGirl.create(:category, user: user) }
+    let!(:activity)   { FactoryGirl.build(:activity, category: category) }
 
-    category = FactoryGirl.create(:category, user: user)
-    activity = FactoryGirl.build(:activity, category: category)
-    click_on 'Add Activity'
-    fill_in 'activity_name', with: activity.name
-    fill_in 'activity_description', with: activity.description
-    fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
-    select activity.category_name, from: 'activity_category_id'
-    click_button 'Create Activity'
+    context 'with valid attributes' do
+      before :each do
+        login(user)
+        click_on 'Add Activity'
+        fill_in 'activity_name', with: activity.name
+        fill_in 'activity_description', with: activity.description
+        fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
+      end
 
-    expect(page).to have_content 'Activity was successfully created.'
-    expect(page).to have_button 'Create Activity'
+      scenario 'adds an activity with an existing category' do
+        select activity.category_name, from: 'activity_category_id'
+        click_button 'Create Activity'
 
-    # saves category properly
-    expect(Activity.first.category_name).to eq activity.category_name
-  end
+        expect(page).to have_content 'Activity was successfully created.'
+        expect(page).to have_button 'Create Activity'
 
-  scenario 'adds an activity without optional attributes' do
-    login(user)
+        # saves category properly
+        expect(Activity.first.category_name).to eq activity.category_name
+      end
 
-    activity = FactoryGirl.build(:activity)
-    click_on 'Add Activity'
-    fill_in 'activity_name', with: activity.name
-    fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
-    click_button 'Create Activity'
+      scenario 'adds an activity without a category' do
+        click_button 'Create Activity'
 
-    expect(page).to have_content 'Activity was successfully created.'
-    expect(page).to have_button 'Create Activity'
-  end
-
-  scenario 'adds an activity without required attributes' do
-    login(user)
-
-    click_on 'Add Activity'
-    click_on 'Create Activity'
-
-    expect(page).to have_button 'Create Activity'
-
-    within '.input.activity_name' do
-      expect(page).to have_content "can't be blank"
+        expect(page).to have_content 'Activity was successfully created.'
+        expect(page).to have_button 'Create Activity'
+      end
     end
 
-    within '.input.activity_time_needed_in_min' do
-      expect(page).to have_content "can't be blank"
+    context 'without valid attributes' do
+      scenario 'adds an activity without required attributes' do
+        login(user)
+        click_on 'Add Activity'
+        click_on 'Create Activity'
+
+        expect(page).to have_button 'Create Activity'
+
+        within '.input.activity_name' do
+          expect(page).to have_content "can't be blank"
+        end
+
+        within '.input.activity_time_needed_in_min' do
+          expect(page).to have_content "can't be blank"
+        end
+      end
+
+      scenario 'adds an activity already in the list' do
+        login(user)
+        existing_activity = FactoryGirl.create(:activity, user: user)
+
+        click_on 'Add Activity'
+        fill_in 'activity_name', with: existing_activity.name
+        fill_in 'activity_description', with: activity.description
+        fill_in 'activity_time_needed_in_min', with: activity.time_needed_in_min
+        click_button 'Create Activity'
+
+        expect(Activity.count).to eq 1
+        expect(page).to have_content 'has already been taken'
+        expect(page).to have_button 'Create Activity'
+      end
     end
   end
 
-  scenario 'adds an activity already in the list' do
-    login(user)
-    existing_activity = FactoryGirl.create(:activity, user: user)
-    new_activity = FactoryGirl.build(:activity, user: user, name: existing_activity.name)
+  context 'unauthenticated user' do
+    scenario 'attempts to add an activity' do
+      visit '/activities/new'
 
-    click_on 'Add Activity'
-    fill_in 'activity_name', with: new_activity.name
-    fill_in 'activity_description', with: new_activity.description
-    fill_in 'activity_time_needed_in_min', with: new_activity.time_needed_in_min
-    click_button 'Create Activity'
-
-    expect(Activity.count).to eq 1
-    expect(page).to have_content 'has already been taken'
-    expect(page).to have_button 'Create Activity'
-  end
-
-  scenario 'unauthenticated user attempts to add an activity' do
-    visit '/activities/new'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
-    expect(page).to_not have_button 'Create Activity'
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+      expect(page).to_not have_button 'Create Activity'
+    end
   end
 end
