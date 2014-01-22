@@ -4,7 +4,7 @@
       <%= f.input :name, label: false, placeholder: 'Name' %>
       <%= f.input :description, label: false, placeholder: 'Description' %>
       <%= f.input :time_needed_in_min, label: false, placeholder: 'Time needed (in min.)' %>
-      <%= f.input :category_string, label: false, placeholder: 'Category name' %>
+      <%= f.input :category_string, :input_html => {'data-autocomplete_source' => @category_names }, label: false, placeholder: 'Category name', id: 'activity-category-name' %>
       <%= f.button :submit, class: 'radius button' %>
     <% end %>
   </div>

@@ -8,6 +8,7 @@ class ActivitiesController < ApplicationController
   def edit
     @activity = Activity.find(params[:id])
     @categories = Category.where(user: current_user)
+    @category_names = @categories.pluck(:name).to_s
   end
 
   def update
@@ -23,6 +24,7 @@ class ActivitiesController < ApplicationController
   def new
     @activity = Activity.new
     @categories = Category.where(user: current_user)
+    @category_names = @categories.pluck(:name).to_s
   end
 
   def create
