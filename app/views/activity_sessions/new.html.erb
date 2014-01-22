@@ -5,7 +5,7 @@
 </div>
 
 <div class="row form">
-  <div class="small-5 columns centered">
+  <div class="small-6 columns centered">
     <% if current_user.activities.blank? %>
 
       <div>
@@ -17,9 +17,9 @@
 
       <div class="form new-activity-session">
         <%= simple_form_for @activity_session do |f| %>
-          <div class="inline">I have</div>
+          <div class="new-session-text">I have</div>
           <div class="inline"><%= f.input :time_available, label: false, as: :string, error: false %></div>
-          <div class="inline">minutes.</div>
+          <div class="new-session-text">minutes.</div>
           <div><%= f.submit 'Give me something to do!', class: 'radius button' %><div>
         <% end %>
       </div>
