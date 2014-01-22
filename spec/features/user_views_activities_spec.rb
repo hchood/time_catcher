@@ -12,20 +12,30 @@ feature 'Authenticated user views list of activities', %Q{
   # * I can click a link from my home screen to view a list of activities, with name, description, category, and time needed displayed
   # * I can only view my own activities
 
-  scenario 'authenticated user views activities' do
-    user = FactoryGirl.create(:user)
-    activity1 = FactoryGirl.create(:activity, user: user)
-    activity2 = FactoryGirl.create(:activity, user: user)
+  context 'authenticated user' do
+    let!(:user) { FactoryGirl.create(:user) }
 
-    login(user)
-    click_on 'My Activities'
+    scenario 'views activities' do
+      activity1 = FactoryGirl.create(:activity, user: user)
+      activity2 = FactoryGirl.create(:activity, user: user)
 
-    expect(page).to have_content activity1.name
-    expect(page).to have_content activity2.name
-    expect(page).to have_content activity1.category_name
-    expect(page).to have_content activity2.category_name
-    expect(page).to have_content activity1.description
-    expect(page).to have_content activity1.time_needed_in_min
+      login(user)
+      click_on 'My Activities'
+
+      expect(page).to have_content activity1.name
+      expect(page).to have_content activity2.name
+      expect(page).to have_content activity1.category_name
+      expect(page).to have_content activity2.category_name
+      expect(page).to have_content activity1.description
+      expect(page).to have_content activity1.time_needed_in_min
+    end
+
+    scenario 'has no activities' do
+      login(user)
+      click_on 'My Activities'
+
+      expect(page).to have_content "You haven't added any activities yet"
+    end
   end
 
   scenario 'unauthenticated user tries to view activities' do
