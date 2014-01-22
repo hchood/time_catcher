@@ -33,7 +33,7 @@ feature 'Authenticated user adds an activity', %Q{
       end
 
       scenario 'adds an activity with an existing category' do
-        select activity.category_name, from: 'activity_category_id'
+        fill_in 'activity_category_string', with: activity.category_name
         click_button 'Create Activity'
 
         expect(page).to have_content 'Activity was successfully created.'
@@ -41,6 +41,17 @@ feature 'Authenticated user adds an activity', %Q{
 
         # saves category properly
         expect(Activity.first.category_name).to eq activity.category_name
+      end
+
+      scenario 'adds an activity with a new category' do
+        fill_in 'activity_category_string', with: 'My New Category'
+        click_button 'Create Activity'
+
+        expect(page).to have_content 'Activity was successfully created.'
+        expect(page).to have_button 'Create Activity'
+
+        expect(Activity.first.category_name).to eq 'My New Category'
+        expect(Category.count).to eq 2
       end
 
       scenario 'adds an activity without a category' do

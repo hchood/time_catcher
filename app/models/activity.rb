@@ -17,4 +17,10 @@ class Activity < ActiveRecord::Base
       category.name
     end
   end
+
+  def category_string
+  end
+
+  def category_string=(value)
+  end
 end

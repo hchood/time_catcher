@@ -26,7 +26,9 @@ class ActivitiesController < ApplicationController
   end
 
   def create
+    category = Category.find_or_create_by(name: params[:activity][:category_string], user: current_user) unless params[:activity][:category_string].blank?
     @activity = Activity.new(activity_params)
+    @activity.category = category
     if @activity.save
       redirect_to new_activity_path, notice: 'Activity was successfully created.'
     else
@@ -47,6 +49,6 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:name, :description, :time_needed_in_min, :category_id).merge(user: current_user)
+    params.require(:activity).permit(:name, :description, :time_needed_in_min, :category_string).merge(user: current_user)
   end
 end
