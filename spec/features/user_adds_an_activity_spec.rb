@@ -39,7 +39,6 @@ feature 'Authenticated user adds an activity', %Q{
         expect(page).to have_content 'Activity was successfully created.'
         expect(page).to have_button 'Create Activity'
 
-        # saves category properly
         expect(Activity.first.category_name).to eq activity.category_name
       end
 
