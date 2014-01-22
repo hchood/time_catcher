@@ -12,25 +12,37 @@ feature 'Authenticated user views list of categories', %Q{
   # * I can click a link from my home screen to view a list of categories
   # * I can see the names of activities associated with each category, as well as the category name
 
-  scenario 'authenticated user views categories' do
-    user = FactoryGirl.create(:user)
-    categories = FactoryGirl.create_list(:category, 2, user: user)
-    category1_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.first)
-    category2_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.last)
+  context 'authenticated user' do
+    let!(:user) { FactoryGirl.create(:user) }
 
-    login(user)
-    click_on 'My Categories'
+    scenario 'views categories' do
+      categories = FactoryGirl.create_list(:category, 2, user: user)
+      category1_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.first)
+      category2_activities = FactoryGirl.create_list(:activity, 2, user: user, category: categories.last)
 
-    categories.each do |category|
-      expect(page).to have_content category.name
-      expect(page).to have_content "#{category.activities.first.name}, #{category.activities.last.name}"
+      login(user)
+      click_on 'My Categories'
+
+      categories.each do |category|
+        expect(page).to have_content category.name
+        expect(page).to have_content "#{category.activities.first.name}, #{category.activities.last.name}"
+      end
+    end
+
+    scenario 'has no categories' do
+      login(user)
+      click_on 'My Categories'
+
+      expect(page).to have_content "You haven't created any categories yet"
     end
   end
 
-  scenario 'unauthenticated user tries to view categories' do
-    visit '/categories'
+  context 'unauthenticated user' do
+    scenario 'unauthenticated user tries to view categories' do
+      visit '/categories'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
-    expect(page).to_not have_button 'My Categories'
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+      expect(page).to_not have_button 'My Categories'
+    end
   end
 end

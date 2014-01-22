@@ -6,20 +6,24 @@
 
 <div class="row form">
   <div class="small-9 columns centered">
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Activities</th>
-      </tr>
-
-      <% @categories.each do |category| %>
+    <% if @categories.blank? %>
+      <p>You haven't created any categories yet.</p>
+      <p>Click <%= link_to 'here', new_category_path %> to start adding categories.</p>
+    <% else %>
+      <table>
         <tr>
-          <td><%= category.name %></td>
-          <td><%= category.activity_names %></td>
-          <td><%= link_to 'Edit', edit_category_path(category) %></td>
-          <td><%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <th>Name</th>
+          <th>Activities</th>
         </tr>
-      <% end %>
-    </table>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= category.activity_names %></td>
+            <td><%= link_to 'Edit', edit_category_path(category) %></td>
+            <td><%= link_to 'Delete', category_path(category), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 </div>
