@@ -15,53 +15,51 @@ feature 'Authenticated user adds a category', %Q{
   # and am redirected to add a new category
   # *  If I don't, I'm presented with error messages
 
-  let!(:user) { FactoryGirl.create(:user) }
+  context 'authenticated user' do
+    before :each do
+      @user = FactoryGirl.create(:user)
+      @category = FactoryGirl.build(:category)
+      login(@user)
+      click_on 'Add Category'
+    end
 
-  scenario 'adds category with valid name' do
-    login(user)
-    click_on 'Add Category'
+    scenario 'adds category with valid name' do
+      fill_in 'Name', with: @category.name
+      click_button 'Create Category'
 
-    category = FactoryGirl.build(:category)
-    fill_in 'Name', with: category.name
-    click_button 'Create Category'
+      expect(Category.count).to eq 1
+      expect(page).to have_content 'Category was successfully created.'
+      expect(page).to have_button 'Create Category'
+    end
 
-    expect(Category.count).to eq 1
-    expect(page).to have_content 'Category was successfully created.'
-    expect(page).to have_button 'Create Category'
+    scenario 'name is missing' do
+      click_button 'Create Category'
+
+      expect(Category.count).to eq 0
+      expect(page).to have_content "Uh oh!  We encountered a problem."
+      expect(page).to have_content "can't be blank"
+      expect(page).to have_button 'Create Category'
+    end
+
+    scenario 'name is already taken' do
+      existing_category = FactoryGirl.create(:category, user: @user)
+
+      fill_in 'Name', with: existing_category.name
+      click_button 'Create Category'
+
+      expect(Category.count).to eq 1
+      expect(page).to have_content "Uh oh!  We encountered a problem."
+      expect(page).to have_content 'has already been taken'
+      expect(page).to have_button 'Create Category'
+    end
   end
 
-  scenario 'adds category without name' do
-    login(user)
-    click_on 'Add Category'
+  context 'unauthenticated user' do
+    scenario 'tries to add a category' do
+      visit '/categories/new'
 
-    click_button 'Create Category'
-
-    expect(Category.count).to eq 0
-    expect(page).to have_content "Uh oh!  We encountered a problem."
-    expect(page).to have_content "can't be blank"
-    expect(page).to have_button 'Create Category'
-  end
-
-  scenario 'adds category with name already taken' do
-    login(user)
-    click_on 'Add Category'
-
-    existing_category = FactoryGirl.create(:category, user: user)
-    new_category = FactoryGirl.build(:category, name: existing_category.name)
-
-    fill_in 'Name', with: new_category.name
-    click_button 'Create Category'
-
-    expect(Category.count).to eq 1
-    expect(page).to have_content "Uh oh!  We encountered a problem."
-    expect(page).to have_content 'has already been taken'
-    expect(page).to have_button 'Create Category'
-  end
-
-  scenario 'unauthenticated user attempts to add a category' do
-    visit '/categories/new'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
-    expect(page).to_not have_button 'Create Category'
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+      expect(page).to_not have_button 'Create Category'
+    end
   end
 end
