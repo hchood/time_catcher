@@ -7,12 +7,13 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find(params[:id])
-    @categories = Category.where(user: current_user)
-    @category_names = @categories.pluck(:name).to_s
+    @category_names = Category.where(user: current_user).pluck(:name).to_s
   end
 
   def update
+    category = Category.find_or_create_by(name: params[:activity][:category_string], user: current_user) unless params[:activity][:category_string].blank?
     @activity = Activity.find(params[:id])
+    @activity.category = category
     if @activity.update(activity_params)
       redirect_to activities_path, notice: 'Changes saved!'
     else
@@ -23,8 +24,7 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new
-    @categories = Category.where(user: current_user)
-    @category_names = @categories.pluck(:name).to_s
+    @category_names = Category.where(user: current_user).pluck(:name).to_s
   end
 
   def create
