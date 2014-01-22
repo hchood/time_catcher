@@ -7,8 +7,6 @@
 <div class="row form">
   <div class="small-5 columns centered">
     <p><%= @activity.description %></p>
-    <p><strong>Category: </strong><%= @activity.category_name %></p>
-
 
     <div class="inline"><%= button_to "I'm done!", { controller: :activity_sessions, action: :update }, method: :patch, class: 'radius button' %></div>
     <div class="inline"><%= button_to 'Skip', { controller: :activity_sessions, action: :skip_activity, id: @activity_session.id }, method: :patch, class: 'radius button' %></div>
