@@ -16,8 +16,7 @@ you're waiting for the bus.  Just input a list of activities you want to do on a
 and TimeCatcher will pick one for you to do based on the amount of free time you have.  Plus, it
 logs your activity so you can track your progress.
 
-The app was built with Ruby on Rails, Foundation, and a little Javascript/jQuery, and is fully-
-tested with Rspec, Capybara, and Poltergeist.  It is deployed on Heroku at timecatcher.herokuapp.
-com.
+The app was built with Ruby on Rails, Foundation, and a little Javascript/jQuery, and is fully-tested
+with RSpec, Capybara, and Poltergeist.  It is deployed on Heroku at timecatcher.herokuapp.com.
 
 Please let me know if you have any suggestions for how to make the app better!
