@@ -12,7 +12,10 @@ feature 'site visitor views about us page', %Q{
 
   scenario 'non-authenticated user views About Us page' do
     visit '/'
-    click_on 'About Us'
+
+    within '.top-bar' do
+      click_on 'About Us'
+    end
 
     expect(page).to have_content 'Launch Academy'
   end

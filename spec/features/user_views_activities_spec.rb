@@ -36,26 +36,24 @@ feature 'Authenticated user views list of activities', %Q{
 
       expect(page).to have_content "You haven't added any activities yet"
     end
+
+    scenario 'can only view own activities' do
+      other_user = FactoryGirl.create(:user)
+      other_activity = FactoryGirl.create(:activity, user: other_user)
+
+      login(user)
+      click_on 'My Activities'
+
+      expect(page).to_not have_content other_activity.name
+    end
   end
 
-  scenario 'unauthenticated user tries to view activities' do
-    visit '/activities'
+  context 'unauthenticated user' do
+    scenario 'tries to view activities' do
+      visit '/activities'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
-    expect(page).to_not have_button 'My Activities'
-  end
-
-  scenario 'user can only view own activities' do
-    user = FactoryGirl.create(:user)
-    activity = FactoryGirl.create(:activity, user: user)
-
-    other_user = FactoryGirl.create(:user)
-    other_activity = FactoryGirl.create(:activity, user: other_user)
-
-    login(user)
-    click_on 'My Activities'
-
-    expect(page).to have_content activity.name
-    expect(page).to_not have_content other_activity.name
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+      expect(page).to_not have_button 'My Activities'
+    end
   end
 end

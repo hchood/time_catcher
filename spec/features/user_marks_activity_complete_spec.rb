@@ -13,24 +13,34 @@ feature 'User marks an activity completed', %Q{
   #    * When I have finished an activity, I want to select “Complete”
   #    * The activity will be marked complete
 
-  scenario 'user marks activity complete' do
-    user = FactoryGirl.create(:user)
-    activity = FactoryGirl.create(:activity, user: user)
-    login(user)
+  context 'authenticated user' do
+    scenario 'marks activity complete' do
+      user = FactoryGirl.create(:user)
+      activity = FactoryGirl.create(:activity, user: user)
+      login(user)
 
-    fill_in 'activity_session[time_available]', with: 15
-    click_on 'Give me something to do!'
-    click_on "I'm done!"
+      fill_in 'activity_session[time_available]', with: 15
+      click_on 'Give me something to do!'
+      click_on "I'm done!"
 
-    # number of times completed is incremented
-    expect(activity.reload.completed_count).to eq 1
+      # The activity's completed count is incremented
+      expect(activity.reload.completed_count).to eq 1
 
-    # ActivitySession finished_at & duration should be updated
-    completed_activity = ActivitySession.first
-    expect(completed_activity.finished_at).to_not be_nil
-    expect(completed_activity.duration_in_seconds).to_not be_nil
+      # ActivitySession finished_at & duration are updated
+      completed_activity = ActivitySession.first
+      expect(completed_activity.finished_at).to_not be_nil
+      expect(completed_activity.duration_in_seconds).to_not be_nil
 
-    # redirects to new_activity_session_path
-    expect(page).to have_button 'Give me something to do!'
+      # redirects to new_activity_session_path
+      expect(page).to have_button 'Give me something to do!'
+    end
+  end
+
+  context 'unauthenticated user' do
+    scenario 'cannot mark an activity complete' do
+      visit '/'
+
+      expect(page).to_not have_button "I'm done!"
+    end
   end
 end

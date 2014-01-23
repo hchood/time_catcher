@@ -15,7 +15,6 @@ feature 'Authenticated user skips an activity', %Q{
   # that is less than or equal to the amount of time I entered initially.
   #  * If I have been given all the activities on my list in that given session, I receive an error message.
 
-
   let!(:user)           { FactoryGirl.create(:user) }
   let!(:short_activity) { FactoryGirl.create(:activity, user: user) }
   let!(:med_activity)   { FactoryGirl.create(:activity, user: user, time_needed_in_min: 10, description: 'A different activity') }
@@ -53,10 +52,6 @@ feature 'Authenticated user skips an activity', %Q{
     first_activity_updated = Activity.find(@first_activity.id)
     expect(first_activity_updated.skipped_count).to eq 1
     expect(@second_activity.skipped_count).to eq 0
-
-    # expect(@first_start_time).to_not eq @second_start_time
-    # ^ NOT TESTING THIS.  THE TESTS HAPPEN SO QUICKLY THAT MOST OF THE TIME
-    # THIS TEST WILL FAIL.  START_TIME DOES GET UPDATED.
   end
 
   scenario 'user has no more activities that can be done in the time available' do
