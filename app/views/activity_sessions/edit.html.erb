@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="small-5 columns centered">
+  <div class="small-12 large-5 columns centered">
     <h2><%= @activity.name %></h2>
   </div>
 </div>
 
 <div class="row form">
-  <div class="small-5 columns centered">
+  <div class="small-12 large-5 columns centered">
     <p><%= @activity.description %></p>
 
     <div class="inline"><%= button_to "I'm done!", { controller: :activity_sessions, action: :update }, method: :patch, class: 'radius button' %></div>

@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="small-5 columns centered">
+  <div class="small-12 large-8 columns centered">
     <h2>Update account settings</h2>
   </div>
 </div>
 
 <div class="row form devise">
-  <div class="small-5 columns centered">
+  <div class="small-12 large-5 columns centered">
     <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
 
       <div><%= f.input :email, :autofocus => true, label: false, placeholder: 'Email address' %></div>
