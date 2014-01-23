@@ -1,28 +1,23 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+TimeCatcher is a web application created by Helen Hood (me!) as an apprentice developer at Launch
+Academy, a Boston-based Ruby on Rails bootcamp.  A cornerstone of Launch's program is the
+"breakable toy," a project that each Launcher takes from the seed of an idea to a fully-functional
+Rails app.  This is mine.
 
-Things you may want to cover:
+About the app:
 
-* Ruby version
+TimeCatcher helps you to build good habits by putting to use those spare minutes you have here and
+there throughout your day.
 
-* System dependencies
+Want to get more exercise?  TimeCatcher will tell you to go for a walk while you're waiting to
+meet a friend for coffee.  Want to start journaling?  TimeCatcher can remind you to write while
+you're waiting for the bus.  Just input a list of activities you want to do on a regular basis,
+and TimeCatcher will pick one for you to do based on the amount of free time you have.  Plus, it
+logs your activity so you can track your progress.
 
-* Configuration
+The app was built with Ruby on Rails, Foundation, and a little Javascript/jQuery, and is fully-
+tested with Rspec, Capybara, and Poltergeist.  It is deployed on Heroku at timecatcher.herokuapp.
+com.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Please let me know if you have any suggestions for how to make the app better!
