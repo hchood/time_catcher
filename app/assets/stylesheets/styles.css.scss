@@ -2,11 +2,7 @@
 @import "foundation_and_overrides";
 
 .bg {
-  background: image-url('background_better.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: image-url('background_better.jpg') no-repeat center fixed;
 }
 
 .error{
@@ -47,7 +43,7 @@
   margin-top: -70px;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 640px) {
   .profile-pic {
     display: none;
   }
