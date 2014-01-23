@@ -34,7 +34,8 @@ class ActivitiesController < ApplicationController
     if @activity.save
       redirect_to new_activity_path, notice: 'Activity was successfully created.'
     else
-      render 'new', notice: "Uh oh!  We encountered a problem."
+      flash.now[:notice] = "Uh oh!  We encountered a problem."
+      render 'new'
     end
   end
 
